@@ -161,21 +161,28 @@ export function Services() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             className="md:hidden fixed inset-0 z-[500] flex items-center justify-center p-6"
             onClick={() => setSelectedIndex(null)}
           >
-            <div className="absolute inset-0 backdrop-blur-sm bg-black/20" />
+            <div 
+              className="absolute inset-0 backdrop-blur-md bg-black/30" 
+              style={{
+                willChange: 'backdrop-filter, opacity',
+                transition: 'backdrop-filter 0.3s ease-out, opacity 0.3s ease-out'
+              }}
+            />
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               className="relative backdrop-blur-xl border-2 border-white/40 rounded-3xl p-8 max-w-md w-full shadow-2xl"
               style={{
                 background: 'linear-gradient(135deg, rgba(255, 103, 177, 0.15) 0%, rgba(21, 60, 96, 0.2) 100%)',
-                boxShadow: '0 20px 60px rgba(21, 60, 96, 0.3), 0 8px 24px rgba(255, 103, 177, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5)'
+                boxShadow: '0 20px 60px rgba(21, 60, 96, 0.3), 0 8px 24px rgba(255, 103, 177, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5)',
+                willChange: 'transform, opacity'
               }}
               onClick={(e) => e.stopPropagation()}
             >

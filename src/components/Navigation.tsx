@@ -11,14 +11,30 @@ export function Navigation() {
   const { activeSection, setActiveSection } = useActiveSection();
 
   useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout | null = null;
+
     const handleScroll = () => {
       // Get scroll from the main element, not window!
       const mainElement = document.querySelector('main');
       const scrollPosition = mainElement ? mainElement.scrollTop : window.scrollY;
       
       // Trigger at just 100px scroll - much easier to activate!
-      const newScrolled = scrollPosition > 100;
-      setScrolled(newScrolled);
+      const shouldBeScrolled = scrollPosition > 100;
+      
+      // Clear any pending timeout
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = null;
+      }
+      
+      if (shouldBeScrolled) {
+        setScrolled(true);
+      } else {
+        // Delay un-scrolling to allow smooth transition
+        scrollTimeout = setTimeout(() => {
+          setScrolled(false);
+        }, 150);
+      }
       
       // Detect which section the logo is currently over
       const sections = ["hero", "about", "services", "stats", "testimonials", "contact", "footer"];
@@ -41,11 +57,17 @@ export function Navigation() {
     if (mainElement) {
       mainElement.addEventListener("scroll", handleScroll);
       handleScroll();
-      return () => mainElement.removeEventListener("scroll", handleScroll);
+      return () => {
+        mainElement.removeEventListener("scroll", handleScroll);
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+      };
     } else {
       window.addEventListener("scroll", handleScroll);
       handleScroll();
-      return () => window.removeEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+      };
     }
   }, []);
 
@@ -144,15 +166,21 @@ export function Navigation() {
           pointerEvents: 'none'
         }}
       >
-        {/* Glass navbar wrapper - always visible, no fade */}
+        {/* Glass navbar wrapper - same smooth transition as scroll */}
         <motion.div 
           initial={{ y: -100, opacity: 0 }}
           animate={{ 
             y: 0, 
-            opacity: 1,
+            opacity: isOpen ? 0 : 1,
+            scale: isOpen ? 0.9 : 1,
             width: scrolled ? '100%' : 'auto'
           }}
-          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ 
+            y: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+            opacity: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+            scale: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+            width: { duration: 0.6, ease: [0.4, 0, 0.2, 1] }
+          }}
           className="flex items-center rounded-3xl overflow-hidden"
           style={{
             padding: scrolled ? '0.875rem 1.25rem 0.875rem 6.5rem' : '0.875rem',
@@ -168,12 +196,11 @@ export function Navigation() {
             backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
             WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
             boxShadow: scrolled ? '0 4px 16px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)' : 'none',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            pointerEvents: 'none',
-            visibility: isOpen ? 'hidden' : 'visible'
+            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+            pointerEvents: isOpen ? 'none' : 'none'
           }}
         >
-          {/* Hamburger inside wrapper - only visible when wrapper is visible */}
+          {/* Hamburger inside wrapper */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

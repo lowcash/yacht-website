@@ -10,9 +10,25 @@ export function ScrollToTop() {
     const main = document.querySelector("main");
     if (!main) return;
 
+    let hideTimeout: NodeJS.Timeout | null = null;
+
     const handleScroll = () => {
-      // Show button when user scrolls down more than 100vh
-      setIsVisible(main.scrollTop > window.innerHeight);
+      const shouldShow = main.scrollTop > window.innerHeight * 0.3; // Show at 30vh instead of 50vh
+      
+      // Clear any pending hide timeout
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+        hideTimeout = null;
+      }
+      
+      if (shouldShow) {
+        setIsVisible(true);
+      } else {
+        // Delay hiding to allow exit animation to complete
+        hideTimeout = setTimeout(() => {
+          setIsVisible(false);
+        }, 200);
+      }
       
       // Detect section at bottom-right corner (where the button is)
       const buttonY = window.innerHeight - 100; // approximate button position
@@ -33,7 +49,10 @@ export function ScrollToTop() {
 
     handleScroll(); // Initial check
     main.addEventListener("scroll", handleScroll);
-    return () => main.removeEventListener("scroll", handleScroll);
+    return () => {
+      main.removeEventListener("scroll", handleScroll);
+      if (hideTimeout) clearTimeout(hideTimeout);
+    };
   }, []);
 
   const scrollToTop = () => {
@@ -47,10 +66,10 @@ export function ScrollToTop() {
     <AnimatePresence>
       {isVisible && (
         <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.8, opacity: 0 }}
+          transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={scrollToTop}
