@@ -1,4 +1,4 @@
-import { motion, useInView } from "motion/react";
+import { useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { SectionDivider } from "./SectionDivider";
 
@@ -36,14 +36,7 @@ function Counter({ end, label, suffix = "", prefix = "" }: StatProps) {
   }, [isInView, end]);
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      className="text-center"
-    >
+    <div ref={ref} className="text-center">
       <div 
         className="text-5xl md:text-6xl lg:text-7xl mb-3"
         style={{ fontFamily: 'Anton, sans-serif' }}
@@ -56,7 +49,7 @@ function Counter({ end, label, suffix = "", prefix = "" }: StatProps) {
       >
         {label}
       </p>
-    </motion.div>
+    </div>
   );
 }
 
@@ -67,13 +60,7 @@ export function Stats() {
       <div className="absolute inset-0 bg-gradient-to-br from-[#153c60] to-[#1a4a75]" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-20 sm:pt-36 md:py-28">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 
             className="text-3xl md:text-4xl lg:text-5xl text-white uppercase tracking-wide mb-4"
             style={{ 
@@ -89,7 +76,7 @@ export function Stats() {
           >
             Years of excellence in yacht support services across Thailand
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           <Counter end={500} label="Yachts Serviced" suffix="+" />

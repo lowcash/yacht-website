@@ -65,13 +65,7 @@ export function Services() {
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-24 sm:pt-36 md:py-36">
-        <motion.div 
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-12 md:mb-16"
-        >
+        <div className="text-center mb-12 md:mb-16">
           <h2 
             className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl uppercase leading-tight mb-4 tracking-wide"
             style={{ 
@@ -89,7 +83,7 @@ export function Services() {
           >
             Your one-stop solution for professional yacht operations in Thailand
           </p>
-        </motion.div>
+        </div>
 
         {/* Services Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 max-w-5xl mx-auto">
@@ -97,20 +91,11 @@ export function Services() {
             const Icon = service.icon;
             return (
               <div key={service.title} className="relative">
-                <motion.div
-                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ 
-                    duration: 0.5,
-                    delay: index * 0.1,
-                    ease: "easeOut"
-                  }}
-                  whileHover={{ scale: 1.02, y: -3 }}
-                  onHoverStart={() => setHoveredIndex(index)}
-                  onHoverEnd={() => setHoveredIndex(null)}
+                <div
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
                   onClick={() => setSelectedIndex(index)}
-                  className="group bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 md:p-6 text-center cursor-pointer transition-all duration-300 hover:bg-white/15 hover:shadow-xl hover:border-[#ff67b1]/50 h-full flex flex-col"
+                  className="group bg-white/10 backdrop-blur-xl border border-white/20 hover:border-[#ff67b1]/50 rounded-2xl p-5 md:p-6 text-center cursor-pointer transition-all duration-300 h-full flex flex-col"
                 >
                   <div className="flex justify-center mb-4">
                     <div className="w-16 h-16 rounded-full bg-[#ff67b1]/20 border border-[#ff67b1]/40 flex items-center justify-center transition-all duration-300 group-hover:bg-[#ff67b1]/30">
@@ -162,7 +147,7 @@ export function Services() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </motion.div>
+                </div>
               </div>
             );
           })}

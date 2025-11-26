@@ -1,4 +1,3 @@
-import { motion } from "motion/react";
 import { SectionDivider } from "./SectionDivider";
 
 export function About() {
@@ -9,13 +8,7 @@ export function About() {
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-24 sm:pt-36 md:py-36">
-        <motion.div 
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="max-w-4xl mx-auto"
-        >
+        <div className="max-w-4xl mx-auto">
           <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 md:p-12 lg:p-16 shadow-lg border border-[#153c60]/5">
             <div className="space-y-8">
               <h2 
@@ -64,7 +57,7 @@ export function About() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Section Divider */}

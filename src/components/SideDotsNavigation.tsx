@@ -56,12 +56,7 @@ export function SideDotsNavigation() {
   };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 1, duration: 0.5 }}
-      className="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-4"
-    >
+    <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-4">
       {sections.map((section) => (
         <div key={section.id} className="relative group">
           {/* Tooltip - Liquid Glass */}
@@ -120,6 +115,6 @@ export function SideDotsNavigation() {
           </motion.button>
         </div>
       ))}
-    </motion.div>
+    </div>
   );
 }

@@ -42,13 +42,7 @@ export function Contact() {
       <div className="absolute inset-0 z-0 bg-gradient-to-br from-white via-[#fef8fb] to-white" />
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-50px" }}
-          className="text-center mb-6 md:mb-8"
-        >
+        <div className="text-center mb-6 md:mb-8">
           <h2 
             className="text-3xl md:text-4xl lg:text-5xl text-[#153c60] uppercase mb-3 tracking-wide"
             style={{ 
@@ -64,16 +58,11 @@ export function Contact() {
           >
             Contact us today for personalized yacht assistance anywhere in Thailand.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
+          <div>
             <div className="bg-[#153c60] p-6 md:p-8 rounded-3xl text-white space-y-5 h-full">
               <div className="flex items-center justify-between">
                 <h3 
@@ -177,16 +166,10 @@ export function Contact() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="bg-white/90 backdrop-blur-md p-6 md:p-8 rounded-3xl shadow-xl"
-          >
+          <div className="bg-white/90 backdrop-blur-md p-6 md:p-8 rounded-3xl shadow-xl">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <Label 
@@ -257,17 +240,11 @@ export function Contact() {
                 </Button>
               </motion.div>
             </form>
-          </motion.div>
+          </div>
         </div>
 
         {/* Footer Section - Integrated */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="relative mt-8 md:mt-12 pt-8 md:pt-12"
-        >
+        <div className="relative mt-8 md:mt-12 pt-8 md:pt-12">
           {/* Minimalist Top Border Gradient */}
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#ff67b1] to-transparent opacity-50" />
           
@@ -337,7 +314,7 @@ export function Contact() {
             </div>
 
           </div>
-        </motion.div>
+        </div>
 
       </div>
     </section>

@@ -340,43 +340,12 @@ export function Navigation() {
                 </div>
 
                 {/* Menu Items */}
-                <motion.div 
-                  className="space-y-2.5 pb-6"
-                  initial="hidden"
-                  animate="visible"
-                  exit="hidden"
-                  variants={{
-                    visible: {
-                      transition: {
-                        staggerChildren: 0.05,
-                        delayChildren: 0.1
-                      }
-                    },
-                    hidden: {
-                      transition: {
-                        staggerChildren: 0.03,
-                        staggerDirection: -1
-                      }
-                    }
-                  }}
-                >
+                <div className="space-y-2.5 pb-6">
                   {navItems.map((item) => {
                     const Icon = item.icon;
                     return (
                       <motion.button
                         key={item.id}
-                        variants={{
-                          hidden: { 
-                            opacity: 0, 
-                            x: -20,
-                            transition: { duration: 0.2 }
-                          },
-                          visible: { 
-                            opacity: 1, 
-                            x: 0,
-                            transition: { duration: 0.3 }
-                          }
-                        }}
                         onClick={(e) => {
                           e.stopPropagation();
                           scrollToSection(item.id);
@@ -399,7 +368,7 @@ export function Navigation() {
                       </motion.button>
                     );
                   })}
-                </motion.div>
+                </div>
               </div>
             </motion.div>
           </>

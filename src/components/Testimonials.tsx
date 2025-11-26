@@ -41,13 +41,7 @@ export function Testimonials() {
       <div className="absolute inset-0 bg-gradient-to-br from-white via-[#fef6fa] to-white" />
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-24 sm:pt-36 md:py-36">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 
             className="text-3xl md:text-4xl lg:text-5xl text-[#153c60] uppercase tracking-wide mb-4"
             style={{ 
@@ -63,7 +57,7 @@ export function Testimonials() {
           >
             What our clients say about us
           </p>
-        </motion.div>
+        </div>
 
         <div className="relative max-w-4xl mx-auto">
           {/* Testimonial Card */}

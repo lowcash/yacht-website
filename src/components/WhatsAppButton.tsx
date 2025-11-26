@@ -12,14 +12,6 @@ export function WhatsAppButton() {
 
   return (
     <motion.button
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ 
-        delay: 2,
-        type: "spring",
-        stiffness: 260,
-        damping: 20 
-      }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={openWhatsApp}

@@ -115,10 +115,7 @@ export function Hero() {
         style={{ opacity }}
       >
         <div className="space-y-8 md:space-y-12">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+          <h1 
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl uppercase tracking-wider leading-tight"
             style={{ 
               fontFamily: 'Anton, sans-serif',
@@ -128,12 +125,9 @@ export function Hero() {
             <span className="text-[#ff67b1]">PINK LADY YACHT</span>
             <br />
             <span className="text-white">SUPPORT SERVICES</span>
-          </motion.h1>
+          </h1>
           
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          <p 
             className="text-white/90 text-xl md:text-2xl lg:text-3xl italic max-w-4xl mx-auto min-h-[3rem]"
             style={{ 
               fontFamily: 'Poppins, sans-serif',
@@ -142,14 +136,9 @@ export function Hero() {
           >
             {displayedText}
             {isTyping && <span className="animate-pulse">|</span>}
-          </motion.p>
+          </p>
           
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="pt-4 md:pt-8"
-          >
+          <div className="pt-4 md:pt-8">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 onClick={() => scrollToSection("contact")}
@@ -160,15 +149,10 @@ export function Hero() {
                 CONTACT NOW
               </Button>
             </motion.div>
-          </motion.div>
+          </div>
 
           {/* Scroll Indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2"
-          >
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -186,7 +170,7 @@ export function Hero() {
               </span>
               <ChevronDown className="text-[#ff67b1] drop-shadow-lg" size={24} />
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </motion.div>
 
