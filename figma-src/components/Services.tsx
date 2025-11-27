@@ -1,12 +1,62 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X } from "lucide-react";
+import { Anchor, Package, Wrench, Fuel, FileText, Banknote, Ship, TrendingUp, X } from "lucide-react";
 import { SectionDivider } from "./SectionDivider";
-import { SERVICES } from "../lib/constants";
 
 export function Services() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const services = [
+    { 
+      icon: Package, 
+      title: "Provisioning", 
+      description: "Complete yacht provisioning services",
+      details: "From fresh provisions to specialized equipment, we source and deliver everything your yacht needs with efficiency and care."
+    },
+    { 
+      icon: Anchor, 
+      title: "Logistics", 
+      description: "Seamless coordination & delivery",
+      details: "Expert coordination of all yacht operations including berth arrangements, crew changes, and cargo handling across Thailand."
+    },
+    { 
+      icon: Wrench, 
+      title: "Maintenance", 
+      description: "Expert technical support",
+      details: "Comprehensive maintenance services with certified technicians ensuring your vessel operates at peak performance."
+    },
+    { 
+      icon: Fuel, 
+      title: "Bunkering", 
+      description: "Fuel supply & management",
+      details: "Reliable fuel supply services with competitive pricing and quality assurance for all vessel types."
+    },
+    { 
+      icon: FileText, 
+      title: "Formalities", 
+      description: "Customs & immigration",
+      details: "Complete assistance with customs clearance, immigration procedures, and all regulatory documentation."
+    },
+    { 
+      icon: Banknote, 
+      title: "Banking Services", 
+      description: "Financial assistance",
+      details: "Currency exchange, payment processing, and financial coordination for smooth operations in Thai waters."
+    },
+    { 
+      icon: Ship, 
+      title: "Yacht Management", 
+      description: "Full vessel management",
+      details: "Comprehensive yacht management including crew coordination, maintenance scheduling, and operational oversight."
+    },
+    { 
+      icon: TrendingUp, 
+      title: "Sales & Charter", 
+      description: "Brokerage services",
+      details: "Professional yacht sales and charter services connecting owners with qualified buyers and charterers."
+    },
+  ];
 
   return (
     <section id="services" className="min-h-screen bg-[#153c60] text-white py-34 px-3 md:px-6 relative overflow-hidden flex items-center justify-center">
@@ -37,7 +87,7 @@ export function Services() {
 
         {/* Services Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 max-w-5xl mx-auto">
-          {SERVICES.map((service, index) => {
+          {services.map((service, index) => {
             const Icon = service.icon;
             return (
               <div key={service.title} className="relative">
@@ -149,7 +199,7 @@ export function Services() {
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center flex-shrink-0 shadow-lg">
                       {(() => {
-                        const Icon = SERVICES[selectedIndex].icon;
+                        const Icon = services[selectedIndex].icon;
                         return <Icon className="w-10 h-10 text-[#ff67b1]" />;
                       })()}
                     </div>
@@ -160,7 +210,7 @@ export function Services() {
                         textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
                       }}
                     >
-                      {SERVICES[selectedIndex].title}
+                      {services[selectedIndex].title}
                     </h3>
                   </div>
                   <p 
@@ -170,7 +220,7 @@ export function Services() {
                       textShadow: '0 1px 4px rgba(0, 0, 0, 0.2)'
                     }}
                   >
-                    {SERVICES[selectedIndex].details}
+                    {services[selectedIndex].details}
                   </p>
                 </>
               )}

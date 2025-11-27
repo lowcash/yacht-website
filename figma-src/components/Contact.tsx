@@ -4,10 +4,9 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin } from "lucide-react";
-import lineQRCode from "../assets/line-qr-code.png";
+import lineQRCode from "figma:asset/2ea5a0b8e51779fd7faaa5abd0bdcc3d1a25875a.png";
 import { motion } from "motion/react";
 import { toast } from "sonner@2.0.3";
-import { COMPANY_INFO } from "../lib/constants";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -38,7 +37,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative min-h-screen flex items-center justify-center overflow-hidden py-40 md:py-40">
+    <section id="contact" className="relative min-h-screen flex items-center justify-center overflow-hidden py-34">
       {/* Minimalist Gradient Background */}
       <div className="absolute inset-0 z-0 bg-gradient-to-br from-white via-[#fef8fb] to-white" />
 
@@ -77,7 +76,7 @@ export function Contact() {
                 <motion.a
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                  href={COMPANY_INFO.social.facebook}
+                  href="#"
                   className="w-9 h-9 rounded-lg bg-[#ff67b1] flex items-center justify-center hover:bg-[#ff4d9f] transition-colors cursor-pointer"
                   aria-label="Facebook"
                 >
@@ -86,7 +85,7 @@ export function Contact() {
                 <motion.a
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                  href={COMPANY_INFO.social.instagram}
+                  href="#"
                   className="w-9 h-9 rounded-lg bg-[#ff67b1] flex items-center justify-center hover:bg-[#ff4d9f] transition-colors cursor-pointer"
                   aria-label="Instagram"
                 >
@@ -95,7 +94,7 @@ export function Contact() {
                 <motion.a
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                  href={COMPANY_INFO.social.linkedin}
+                  href="#"
                   className="w-9 h-9 rounded-lg bg-[#ff67b1] flex items-center justify-center hover:bg-[#ff4d9f] transition-colors cursor-pointer"
                   aria-label="LinkedIn"
                 >
@@ -106,7 +105,7 @@ export function Contact() {
             
             <div className="space-y-4">
               <a 
-                href={COMPANY_INFO.mapLink}
+                href="https://www.google.com/maps/search/?api=1&query=Phuket,Thailand" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-start gap-3 group cursor-pointer"
@@ -115,13 +114,13 @@ export function Contact() {
                   <MapPin className="w-5 h-5 text-white" />
                 </div>
                 <div className="transition-all duration-300 group-hover:text-[#ff67b1]/70" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                  <p className="opacity-80 text-sm">{COMPANY_INFO.locationName}</p>
-                  <p className="text-sm">{COMPANY_INFO.address}</p>
+                  <p className="opacity-80 text-sm">Thailand</p>
+                  <p className="text-sm">Phuket, Krabi, Koh Samui</p>
                 </div>
               </a>
 
               <a 
-                href={`tel:${COMPANY_INFO.phone}`}
+                href="tel:+66851904836"
                 className="flex items-start gap-3 group cursor-pointer"
               >
                 <div className="w-10 h-10 rounded-lg bg-[#ff67b1] group-hover:bg-[#ff67b1]/70 flex items-center justify-center flex-shrink-0 transition-all duration-300">
@@ -129,12 +128,12 @@ export function Contact() {
                 </div>
                 <div className="transition-all duration-300 group-hover:text-[#ff67b1]/70" style={{ fontFamily: 'Poppins, sans-serif' }}>
                   <p className="opacity-80 text-sm">Phone</p>
-                  <p className="text-sm">{COMPANY_INFO.phoneDisplay}</p>
+                  <p className="text-sm">+668 5190 4836</p>
                 </div>
               </a>
 
               <a 
-                href={`mailto:${COMPANY_INFO.email}`}
+                href="mailto:pinkladyyachtingservices@gmail.com"
                 className="flex items-start gap-3 group cursor-pointer"
               >
                 <div className="w-10 h-10 rounded-lg bg-[#ff67b1] group-hover:bg-[#ff67b1]/70 flex items-center justify-center flex-shrink-0 transition-all duration-300">
@@ -142,7 +141,7 @@ export function Contact() {
                 </div>
                 <div className="transition-all duration-300 group-hover:text-[#ff67b1]/70" style={{ fontFamily: 'Poppins, sans-serif' }}>
                   <p className="opacity-80 text-sm">Email</p>
-                  <p className="text-sm whitespace-nowrap break-all">{COMPANY_INFO.email}</p>
+                  <p className="text-sm whitespace-nowrap">pinkladyyachtingservices@gmail.com</p>
                 </div>
               </a>
             </div>
@@ -283,7 +282,7 @@ export function Contact() {
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                href={COMPANY_INFO.social.facebook}
+                href="#" 
                 className="w-10 h-10 rounded-xl bg-[#153c60]/10 hover:bg-[#ff67b1]/20 backdrop-blur-sm flex items-center justify-center transition-all duration-300 border border-[#153c60]/10"
                 aria-label="Facebook"
               >
@@ -292,7 +291,7 @@ export function Contact() {
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                href={COMPANY_INFO.social.instagram}
+                href="#" 
                 className="w-10 h-10 rounded-xl bg-[#153c60]/10 hover:bg-[#ff67b1]/20 backdrop-blur-sm flex items-center justify-center transition-all duration-300 border border-[#153c60]/10"
                 aria-label="Instagram"
               >
@@ -301,7 +300,7 @@ export function Contact() {
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                href={COMPANY_INFO.social.linkedin}
+                href="#" 
                 className="w-10 h-10 rounded-xl bg-[#153c60]/10 hover:bg-[#ff67b1]/20 backdrop-blur-sm flex items-center justify-center transition-all duration-300 border border-[#153c60]/10"
                 aria-label="LinkedIn"
               >

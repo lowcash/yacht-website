@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Briefcase, Info, MessageCircle, TrendingUp, Star } from "lucide-react";
-import logoImage from "../assets/pink-lady-logo.png";
+import logoImage from "figma:asset/65897fd0094a7cc3c22266482c6cb741758daade.png";
 import { motion, AnimatePresence } from "motion/react";
 import { useActiveSection } from "./ActiveSectionContext";
 
