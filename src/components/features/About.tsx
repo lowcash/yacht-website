@@ -1,4 +1,4 @@
-import { SectionDivider } from "./SectionDivider";
+import { SectionDivider } from "../shared/SectionDivider";
 
 export function About() {
   return (

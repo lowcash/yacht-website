@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
-import { useActiveSection } from "./ActiveSectionContext";
+import { useActiveSection } from "../shared/ActiveSectionContext";
 
 const sections = [
   { id: "hero", label: "Welcome" },

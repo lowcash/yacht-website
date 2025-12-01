@@ -1,4 +1,3 @@
-
 # Pink Lady Yacht Services
 
 A professional service website for yacht maintenance and support services.

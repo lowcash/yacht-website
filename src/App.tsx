@@ -1,16 +1,16 @@
-import { Hero } from "./components/Hero";
-import { Services } from "./components/Services";
-import { Stats } from "./components/Stats";
-import { About } from "./components/About";
-import { Testimonials } from "./components/Testimonials";
-import { Contact } from "./components/Contact";
-import { Navigation } from "./components/Navigation";
-import { SideDotsNavigation } from "./components/SideDotsNavigation";
-import { WhatsAppButton } from "./components/WhatsAppButton";
-import { ScrollToTop } from "./components/ScrollToTop";
+import { Hero } from "./components/features/Hero";
+import { Services } from "./components/features/Services";
+import { Stats } from "./components/features/Stats";
+import { About } from "./components/features/About";
+import { Testimonials } from "./components/features/Testimonials";
+import { Contact } from "./components/features/Contact";
+import { Navigation } from "./components/layout/Navigation";
+import { SideDotsNavigation } from "./components/layout/SideDotsNavigation";
+import { WhatsAppButton } from "./components/shared/WhatsAppButton";
+import { ScrollToTop } from "./components/shared/ScrollToTop";
 import { Toaster } from "./components/ui/sonner";
-import { ActiveSectionProvider } from "./components/ActiveSectionContext";
-import { GoogleAnalytics } from './components/GoogleAnalytics';
+import { ActiveSectionProvider } from "./components/shared/ActiveSectionContext";
+import { GoogleAnalytics } from './components/shared/GoogleAnalytics';
 
 export default function App() {
   return (

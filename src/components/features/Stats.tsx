@@ -1,6 +1,6 @@
 import { useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { SectionDivider } from "./SectionDivider";
+import { SectionDivider } from "../shared/SectionDivider";
 
 interface StatProps {
   end: number;

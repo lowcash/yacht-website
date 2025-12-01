@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ChevronDown } from "lucide-react";
-import { SectionDivider } from "./SectionDivider";
+import { SectionDivider } from "../shared/SectionDivider";
 
 const QUOTES = [
   "Excellence in Every Wave",

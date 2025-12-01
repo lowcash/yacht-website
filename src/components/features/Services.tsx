@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
-import { SectionDivider } from "./SectionDivider";
-import { SERVICES } from "../lib/constants";
+import { SectionDivider } from "../shared/SectionDivider";
+import { SERVICES } from "../../lib/constants";
 
 export function Services() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

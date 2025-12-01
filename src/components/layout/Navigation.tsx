@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, Briefcase, Info, MessageCircle, TrendingUp, Star } from "lucide-react";
-import logoImage from "../assets/pink-lady-logo.png";
+import logoImage from "../../assets/pink-lady-logo.png";
 import { motion, AnimatePresence } from "motion/react";
-import { useActiveSection } from "./ActiveSectionContext";
+import { useActiveSection } from "../shared/ActiveSectionContext";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);

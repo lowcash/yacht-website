@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { Label } from "./ui/label";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { Label } from "../ui/label";
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin } from "lucide-react";
-import lineQRCode from "../assets/line-qr-code.png";
+import lineQRCode from "../../assets/line-qr-code.png";
 import { motion } from "motion/react";
 import { toast } from "sonner@2.0.3";
-import { COMPANY_INFO } from "../lib/constants";
+import { COMPANY_INFO } from "../../lib/constants";
 
 export function Contact() {
   const [formData, setFormData] = useState({

@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { SectionDivider } from "./SectionDivider";
+import { SectionDivider } from "../shared/SectionDivider";
 
 const testimonials = [
   {
