@@ -24,7 +24,7 @@ export default function App() {
           <WhatsAppButton />
           <ScrollToTop />
         
-        <main id="main-content" className="snap-y snap-mandatory overflow-y-scroll h-[100dvh] overscroll-none">
+        <main id="main-content" className="snap-y snap-mandatory overflow-y-scroll h-[100dvh]">
           <div className="snap-start h-[100dvh]">
             <Hero />
           </div>

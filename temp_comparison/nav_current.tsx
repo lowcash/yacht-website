@@ -20,8 +20,8 @@ export function Navigation() {
       
       // Update scrolled state
       if (!isScrollingToTop.current) {
-        setScrolled(scrollPosition > 100);
-      } else if (scrollPosition < 100) {
+        setScrolled(scrollPosition > 50);
+      } else if (scrollPosition < 50) {
         isScrollingToTop.current = false;
         setScrolled(false);
       }
@@ -156,9 +156,8 @@ export function Navigation() {
           right: '1rem',
           left: scrolled ? '1rem' : 'auto',
           zIndex: 300,
-          pointerEvents: isOpen ? 'none' : 'auto',
-          opacity: isOpen ? 0 : 1,
-          transition: 'left 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease',
+          pointerEvents: 'auto',
+          transition: 'left 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >
         {/* Wrapper with all transitions in CSS */}
@@ -193,11 +192,19 @@ export function Navigation() {
             }}
             aria-label="Toggle menu"
           >
-            <Menu className="w-6 h-6" style={{ 
-              filter: isLightSection 
-                ? 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.8)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))' 
-                : 'drop-shadow(0 0 4px rgba(21, 60, 96, 0.6)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))'
-            }} />
+            {isOpen ? (
+              <X className="w-6 h-6" style={{ 
+                filter: isLightSection 
+                  ? 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.8))' 
+                  : 'drop-shadow(0 0 4px rgba(21, 60, 96, 0.6))'
+              }} />
+            ) : (
+              <Menu className="w-6 h-6" style={{ 
+                filter: isLightSection 
+                  ? 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.8)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))' 
+                  : 'drop-shadow(0 0 4px rgba(21, 60, 96, 0.6)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))'
+              }} />
+            )}
           </button>
         </div>
       </div>
@@ -211,9 +218,13 @@ export function Navigation() {
         }`}
         style={{ 
           pointerEvents: 'none',
-          background: 'transparent',
-          backdropFilter: 'none',
-          boxShadow: 'none'
+          background: scrolled 
+            ? (isLightSection
+                ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%)'
+                : 'linear-gradient(180deg, rgba(21, 60, 96, 0.9) 0%, rgba(21, 60, 96, 0.8) 100%)')
+            : 'transparent',
+          backdropFilter: scrolled ? 'blur(10px)' : 'none',
+          boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.1)' : 'none'
         }}
       >
         {/* Content Container */}
@@ -299,17 +310,6 @@ export function Navigation() {
               }}
               onClick={() => setIsOpen(false)}
             >
-              {/* Close Button */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsOpen(false);
-                }}
-                className="absolute top-6 right-6 p-2 text-white/80 hover:text-white transition-colors z-50"
-              >
-                <X size={32} />
-              </button>
-
               {/* Centered Menu Container */}
               <div 
                 className="flex flex-col items-center h-full px-6 justify-center"
