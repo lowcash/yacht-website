@@ -25,24 +25,12 @@ export default function App() {
           <ScrollToTop />
         
         <main className="snap-y snap-mandatory overflow-y-scroll h-screen">
-          <div className="snap-start">
-            <Hero />
-          </div>
-          <div className="snap-start">
-            <Services />
-          </div>
-          <div className="snap-start">
-            <About />
-          </div>
-          <div className="snap-start">
-            <Stats />
-          </div>
-          <div className="snap-start">
-            <Testimonials />
-          </div>
-          <div className="snap-start">
-            <Contact />
-          </div>
+          <Hero />
+          <Services />
+          <About />
+          <Stats />
+          <Testimonials />
+          <Contact />
         </main>
         
         <Toaster 

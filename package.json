@@ -54,6 +54,7 @@
       },
       "scripts": {
           "dev": "vite",
+          "dev:ip": "vite --host",
           "build": "vite build"
       }
   }

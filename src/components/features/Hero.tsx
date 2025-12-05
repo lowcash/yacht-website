@@ -80,7 +80,7 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a2540]">
+    <section id="hero" className="snap-start relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a2540]">
       {/* Mobile Logo moved to Navigation.tsx */}
 
       {/* Background Video - More Visible with Parallax */}

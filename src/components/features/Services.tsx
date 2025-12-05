@@ -21,7 +21,7 @@ export function Services() {
   }, [selectedIndex]);
 
   return (
-    <section id="services" className="min-h-screen bg-[#153c60] text-white py-32 md:py-40 px-3 md:px-6 relative overflow-hidden flex flex-col justify-center">
+    <section id="services" className="snap-start min-h-screen bg-[#153c60] text-white py-32 md:py-40 px-3 md:px-6 relative overflow-hidden flex flex-col justify-center">
       {/* Clean Minimalist Background */}
       <div className="absolute inset-0 bg-[#153c60]" />
 
@@ -150,7 +150,7 @@ export function Services() {
               {selectedIndex !== null && (
                 <>
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center flex-shrink-0 shadow-lg">
+                    <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shrink-0 shadow-lg">
                       {(() => {
                         const Icon = SERVICES[selectedIndex].icon;
                         return <Icon className="w-10 h-10 text-[#ff67b1]" />;

@@ -36,7 +36,7 @@ export function Testimonials() {
   };
 
   return (
-    <section id="testimonials" className="relative min-h-screen flex flex-col justify-center overflow-hidden py-32 md:py-40">
+    <section id="testimonials" className="snap-start relative min-h-screen flex flex-col justify-center overflow-hidden py-32 md:py-40">
       {/* Minimalist gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-white via-[#fef6fa] to-white" />
 

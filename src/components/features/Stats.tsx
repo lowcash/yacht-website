@@ -55,7 +55,7 @@ function Counter({ end, label, suffix = "", prefix = "" }: StatProps) {
 
 export function Stats() {
   return (
-    <section id="stats" className="relative min-h-screen flex flex-col justify-center overflow-hidden py-32 md:py-40">
+    <section id="stats" className="snap-start relative min-h-screen flex flex-col justify-center overflow-hidden py-32 md:py-40">
       {/* Minimalist Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#153c60] to-[#1a4a75]" />
 

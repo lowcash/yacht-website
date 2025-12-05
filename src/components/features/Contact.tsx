@@ -38,7 +38,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative min-h-screen flex flex-col justify-center overflow-hidden py-32 md:py-40">
+    <section id="contact" className="snap-start relative min-h-screen flex flex-col justify-center overflow-hidden py-32 md:py-40">
       {/* Minimalist Gradient Background */}
       <div className="absolute inset-0 z-0 bg-gradient-to-br from-white via-[#fef8fb] to-white" />
 
@@ -117,7 +117,7 @@ export function Contact() {
                 rel="noopener noreferrer"
                 className="contact-link inline-flex items-center gap-4 group cursor-pointer transition-all duration-300"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#ff67b1] flex items-center justify-center flex-shrink-0 transition-all duration-300">
+                <div className="w-10 h-10 rounded-lg bg-[#ff67b1] flex items-center justify-center shrink-0 transition-all duration-300">
                   <MapPin className="w-5 h-5 text-white" />
                 </div>
                 <div className="transition-all duration-300" style={{ fontFamily: 'Poppins, sans-serif' }}>
@@ -132,7 +132,7 @@ export function Contact() {
                 href={`tel:${COMPANY_INFO.phone}`}
                 className="contact-link inline-flex items-center gap-4 group cursor-pointer transition-all duration-300"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#ff67b1] flex items-center justify-center flex-shrink-0 transition-all duration-300">
+                <div className="w-10 h-10 rounded-lg bg-[#ff67b1] flex items-center justify-center shrink-0 transition-all duration-300">
                   <Phone className="w-5 h-5 text-white" />
                 </div>
                 <div className="transition-all duration-300" style={{ fontFamily: 'Poppins, sans-serif' }}>
@@ -147,7 +147,7 @@ export function Contact() {
                 href={`mailto:${COMPANY_INFO.email}`}
                 className="contact-link inline-flex items-center gap-4 group cursor-pointer transition-all duration-300"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#ff67b1] flex items-center justify-center flex-shrink-0 transition-all duration-300">
+                <div className="w-10 h-10 rounded-lg bg-[#ff67b1] flex items-center justify-center shrink-0 transition-all duration-300">
                   <Mail className="w-5 h-5 text-white" />
                 </div>
                 <div className="transition-all duration-300" style={{ fontFamily: 'Poppins, sans-serif' }}>

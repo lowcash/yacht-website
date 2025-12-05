@@ -181,7 +181,7 @@ export function Navigation() {
           {/* Hamburger button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2.5 rounded-xl flex-shrink-0 relative z-10"
+            className="p-2.5 rounded-xl shrink-0 relative z-10"
             style={{
               background: isLightSection ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)',
               color: isLightSection ? '#153c60' : 'white',
@@ -357,7 +357,7 @@ export function Navigation() {
                             boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
                           }}
                         >
-                          <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-[#ff67b1]/30 group-hover:bg-[#ff67b1]/50 flex items-center justify-center transition-colors flex-shrink-0">
+                          <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-[#ff67b1]/30 group-hover:bg-[#ff67b1]/50 flex items-center justify-center transition-colors shrink-0">
                             <Icon className="text-white" size={24} />
                           </div>
                           <span 
