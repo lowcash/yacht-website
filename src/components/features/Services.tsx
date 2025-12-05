@@ -8,18 +8,6 @@ export function Services() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  // Lock body scroll when modal is open
-  useEffect(() => {
-    if (selectedIndex !== null) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [selectedIndex]);
-
   return (
     <section id="services" className="min-h-screen bg-[#153c60] text-white py-32 md:py-40 px-3 md:px-6 relative overflow-hidden flex flex-col justify-center">
       {/* Clean Minimalist Background */}
@@ -120,11 +108,12 @@ export function Services() {
       <AnimatePresence>
         {selectedIndex !== null && (
           <motion.div
+            id="service-modal"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden fixed inset-0 z-[500] flex items-center justify-center p-6 bg-black/60 backdrop-blur-md"
+            className="md:hidden fixed inset-0 z-[500] flex items-center justify-center p-6 bg-black/60 backdrop-blur-md touch-none"
             onClick={() => setSelectedIndex(null)}
           >
             <motion.div
@@ -132,7 +121,7 @@ export function Services() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative backdrop-blur-xl border-2 border-white/40 rounded-3xl p-8 max-w-md w-full shadow-2xl"
+              className="relative backdrop-blur-xl border-2 border-white/40 rounded-3xl p-8 max-w-md w-full shadow-2xl overflow-y-auto max-h-[80vh]"
               style={{
                 background: 'linear-gradient(135deg, rgba(255, 103, 177, 0.15) 0%, rgba(21, 60, 96, 0.9) 100%)',
                 boxShadow: '0 20px 60px rgba(21, 60, 96, 0.3), 0 8px 24px rgba(255, 103, 177, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5)',

@@ -13,7 +13,6 @@ const sections = [
 
 export function SideDotsNavigation() {
   const { activeSection, setActiveSection } = useActiveSection();
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
   // Define which sections have light backgrounds (need dark text)
   const lightSections = ["about", "testimonials", "contact"];
@@ -27,37 +26,6 @@ export function SideDotsNavigation() {
     return "white"; // White for dark sections (hero, services, stats)
   };
   
-  useEffect(() => {
-    // Use a simpler approach: detect which section the center of viewport is currently in
-    const handleScroll = () => {
-      const viewportCenter = window.innerHeight / 2;
-      
-      for (const section of sections) {
-        const element = document.getElementById(section.id);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          // Check if viewport center is within this section
-          if (rect.top <= viewportCenter && rect.bottom >= viewportCenter) {
-            setActiveSection(section.id);
-            break;
-          }
-        }
-      }
-    };
-
-    // Listen to scroll on main element
-    const mainElement = document.querySelector('main');
-    if (mainElement) {
-      mainElement.addEventListener('scroll', handleScroll);
-      handleScroll(); // Initial call
-      return () => mainElement.removeEventListener('scroll', handleScroll);
-    } else {
-      window.addEventListener('scroll', handleScroll);
-      handleScroll(); // Initial call
-      return () => window.removeEventListener('scroll', handleScroll);
-    }
-  }, []);
-
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {

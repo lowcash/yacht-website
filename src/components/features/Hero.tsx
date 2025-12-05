@@ -31,20 +31,32 @@ export function Hero() {
   // Track scroll for logo animation
   useEffect(() => {
     const handleScroll = () => {
-      const mainElement = document.querySelector('main');
+      const mainElement = document.getElementById('main-content');
       const scrollPosition = mainElement ? mainElement.scrollTop : window.scrollY;
       setScrolled(scrollPosition > 100);
     };
     
-    const mainElement = document.querySelector('main');
+    const mainElement = document.getElementById('main-content');
     if (mainElement) {
       mainElement.addEventListener("scroll", handleScroll);
       handleScroll();
       return () => mainElement.removeEventListener("scroll", handleScroll);
     } else {
-      window.addEventListener("scroll", handleScroll);
-      handleScroll();
-      return () => window.removeEventListener("scroll", handleScroll);
+      // Fallback
+      const retryInterval = setInterval(() => {
+        const main = document.getElementById('main-content');
+        if (main) {
+          clearInterval(retryInterval);
+          main.addEventListener("scroll", handleScroll);
+          handleScroll();
+        }
+      }, 100);
+      
+      return () => {
+        clearInterval(retryInterval);
+        const main = document.getElementById('main-content');
+        if (main) main.removeEventListener("scroll", handleScroll);
+      };
     }
   }, []);
 

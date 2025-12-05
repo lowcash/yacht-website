@@ -51,6 +51,24 @@ function DialogContent({
   children,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content>) {
+  // Lock main content scroll when dialog is open
+  React.useEffect(() => {
+    const main = document.getElementById('main-content');
+    if (main) {
+      // Store current scroll position
+      const scrollY = main.scrollTop;
+      main.style.overflow = 'hidden';
+      // Prevent iOS bounce
+      main.style.overscrollBehavior = 'none';
+    }
+    return () => {
+      if (main) {
+        main.style.overflow = '';
+        main.style.overscrollBehavior = '';
+      }
+    };
+  }, []);
+
   return (
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay />

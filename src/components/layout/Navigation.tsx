@@ -12,34 +12,33 @@ export function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const mainElement = document.querySelector('main');
+      // If menu is open, don't update scroll state to prevent jumps
+      if (isOpen) return;
+
+      const mainElement = document.getElementById('main-content');
       const scrollPosition = mainElement ? mainElement.scrollTop : window.scrollY;
       
-      // If we are forcing scroll to top, ignore the > 100 check and keep it false
-      if (isScrollingToTop.current) {
-        if (scrollPosition < 50) {
-          isScrollingToTop.current = false;
-        }
-        if (scrolled) setScrolled(false);
-        return;
-      }
-
-      // Simple logic: scrolled = true when scroll > 100px
-      const newScrolled = scrollPosition > 100;
-      
-      if (newScrolled !== scrolled) {
-        setScrolled(newScrolled);
+      // Update scrolled state
+      if (!isScrollingToTop.current) {
+        setScrolled(scrollPosition > 50);
+      } else if (scrollPosition < 50) {
+        isScrollingToTop.current = false;
+        setScrolled(false);
       }
       
-      // Detect which section the logo is currently over
+      // Section detection
+      const viewportHeight = window.innerHeight;
+      // Use a point slightly below the top (e.g., 1/3 down) for better feel
+      const detectionPoint = viewportHeight * 0.3;
+      
       const sections = ["hero", "about", "services", "stats", "testimonials", "contact", "footer"];
-      const logoPosition = 100;
       
       for (const sectionId of sections) {
         const section = document.getElementById(sectionId);
         if (section) {
           const rect = section.getBoundingClientRect();
-          if (rect.top <= logoPosition && rect.bottom >= logoPosition) {
+          // Check if the section contains the detection point
+          if (rect.top <= detectionPoint && rect.bottom > detectionPoint) {
             setActiveSection(sectionId);
             break;
           }
@@ -47,23 +46,26 @@ export function Navigation() {
       }
     };
     
-    const mainElement = document.querySelector('main');
-    if (mainElement) {
-      mainElement.addEventListener("scroll", handleScroll);
-      handleScroll();
-      return () => mainElement.removeEventListener("scroll", handleScroll);
-    } else {
-      window.addEventListener("scroll", handleScroll);
-      handleScroll();
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
-  }, [scrolled]);
+    const mainElement = document.getElementById('main-content');
+    const target = mainElement || window;
+    
+    target.addEventListener("scroll", handleScroll, { passive: true });
+    // Initial check
+    handleScroll();
+    
+    return () => {
+      target.removeEventListener("scroll", handleScroll);
+    };
+  }, [setActiveSection, isOpen]);
 
   useEffect(() => {
+    const main = document.getElementById('main-content');
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      if (main) main.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
+      if (main) main.style.overflow = '';
     }
   }, [isOpen]);
 
@@ -153,8 +155,8 @@ export function Navigation() {
           top: '1rem',
           right: '1rem',
           left: scrolled ? '1rem' : 'auto',
-          zIndex: 200,
-          pointerEvents: isOpen ? 'none' : 'auto',
+          zIndex: 300,
+          pointerEvents: 'auto',
           transition: 'left 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >
@@ -181,62 +183,49 @@ export function Navigation() {
           {/* Hamburger button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2.5 rounded-xl flex-shrink-0 relative z-10"
+            className="p-2.5 rounded-xl flex-shrink-0 relative z-10 transition-all duration-300"
             style={{
               background: isLightSection ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)',
               color: isLightSection ? '#153c60' : 'white',
               border: `1px solid ${isLightSection ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.3)'}`,
-              transition: 'all 0.3s ease-out',
+              transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)',
             }}
             aria-label="Toggle menu"
           >
-            <Menu className="w-6 h-6" style={{ 
-              filter: isLightSection 
-                ? 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.8)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))' 
-                : 'drop-shadow(0 0 4px rgba(21, 60, 96, 0.6)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))'
-            }} />
+            {isOpen ? (
+              <X className="w-6 h-6" style={{ 
+                filter: isLightSection 
+                  ? 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.8))' 
+                  : 'drop-shadow(0 0 4px rgba(21, 60, 96, 0.6))'
+              }} />
+            ) : (
+              <Menu className="w-6 h-6" style={{ 
+                filter: isLightSection 
+                  ? 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.8)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))' 
+                  : 'drop-shadow(0 0 4px rgba(21, 60, 96, 0.6)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))'
+              }} />
+            )}
           </button>
         </div>
       </div>
 
-      {/* X button - Glass style */}
-      <motion.button
-        className="lg:hidden fixed p-2.5 rounded-xl"
-        style={{
-          top: scrolled ? '1.875rem' : '1.875rem',
-          right: scrolled ? 'calc(1rem + 1.25rem)' : '1.875rem',
-          zIndex: 300,
-          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%)',
-          color: 'white',
-          border: '1px solid rgba(255, 255, 255, 0.3)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-          pointerEvents: isOpen ? 'auto' : 'none',
-          transition: 'right 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
-        }}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ 
-          opacity: isOpen ? 1 : 0,
-          scale: isOpen ? 1 : 0.8
-        }}
-        transition={{ duration: 0.3 }}
-        whileHover={{ scale: 1.05, background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%)' }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(false)}
-        aria-label="Close menu"
-      >
-        <X className="w-6 h-6" style={{ 
-          filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))'
-        }} />
-      </motion.button>
+
 
       {/* DESKTOP: Floating Logo - No Wrapper */}
       <div
         className={`hidden lg:block fixed top-0 left-0 right-0 z-50 transition-all duration-600 ease-in-out ${
-          scrolled ? 'py-8' : 'py-8'
+          scrolled ? 'py-4' : 'py-8'
         }`}
-        style={{ pointerEvents: 'none' }}
+        style={{ 
+          pointerEvents: 'none',
+          background: scrolled 
+            ? (isLightSection
+                ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%)'
+                : 'linear-gradient(180deg, rgba(21, 60, 96, 0.9) 0%, rgba(21, 60, 96, 0.8) 100%)')
+            : 'transparent',
+          backdropFilter: scrolled ? 'blur(10px)' : 'none',
+          boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.1)' : 'none'
+        }}
       >
         {/* Content Container */}
         <div className="max-w-7xl mx-auto px-8">
