@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Button } from "../ui/button";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import { SectionDivider } from "../shared/SectionDivider";
@@ -119,14 +118,13 @@ export function Hero() {
           
           <div className="pt-4 md:pt-8">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
+              <button
                 onClick={() => scrollToSection("contact")}
-                size="lg"
                 className="bg-[#ff67b1] hover:bg-[#ff67b1]/90 text-white px-12 md:px-16 py-6 md:py-8 text-xl md:text-2xl rounded-full uppercase tracking-wider shadow-2xl transition-all duration-300 border-2 border-[#ff67b1]/30 cursor-pointer"
                 style={{ fontFamily: 'Anton, sans-serif' }}
               >
                 CONTACT NOW
-              </Button>
+              </button>
             </motion.div>
           </div>
 
