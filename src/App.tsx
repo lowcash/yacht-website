@@ -10,13 +10,10 @@ import { WhatsAppButton } from "./components/shared/WhatsAppButton";
 import { ScrollToTop } from "./components/shared/ScrollToTop";
 import { Toaster } from "./components/ui/sonner";
 import { ActiveSectionProvider } from "./components/shared/ActiveSectionContext";
-import { GoogleAnalytics } from './components/shared/GoogleAnalytics';
 
 export default function App() {
   return (
     <>
-      <GoogleAnalytics />
-      
       <ActiveSectionProvider>
         <div className="min-h-screen">
           <Navigation />
