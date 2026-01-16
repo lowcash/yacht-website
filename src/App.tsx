@@ -1,6 +1,5 @@
 import { Hero } from "./components/features/Hero";
 import { Services } from "./components/features/Services";
-import { Stats } from "./components/features/Stats";
 import { About } from "./components/features/About";
 
 import { Contact } from "./components/features/Contact";
@@ -25,7 +24,6 @@ export default function App() {
           <Hero />
           <Services />
           <About />
-          <Stats />
           <Contact />
         </main>
         
