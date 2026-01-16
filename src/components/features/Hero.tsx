@@ -103,7 +103,7 @@ export function Hero() {
             title="Background Video"
           />
           {/* Gradient Overlay - Top & Bottom only for cinematic look */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a2540]/60 via-transparent to-[#0a2540]/70" />
+          <div className="absolute inset-0 bg-linear-to-b from-[#0a2540]/60 via-transparent to-[#0a2540]/70" />
           {/* Subtle side vignette */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a2540]/40 via-transparent to-[#0a2540]/40" />
         </div>

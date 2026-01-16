@@ -7,7 +7,6 @@ const sections = [
   { id: "services", label: "Services" },
   { id: "about", label: "About" },
   { id: "stats", label: "Stats" },
-  { id: "testimonials", label: "Testimonials" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -16,7 +15,7 @@ export function SideDotsNavigation() {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   // Define which sections have light backgrounds (need dark text)
-  const lightSections = ["about", "testimonials", "contact"];
+  const lightSections = ["about", "contact"];
   const isLightSection = lightSections.includes(activeSection);
   
   // Tooltip color based on active section

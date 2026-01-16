@@ -71,7 +71,7 @@ export function Services() {
                     {service.title}
                   </h3>
                   <p 
-                    className="text-white/75 text-sm flex-grow leading-relaxed"
+                    className="text-white/75 text-sm grow leading-relaxed"
                     style={{ fontFamily: 'Poppins, sans-serif' }}
                   >
                     {service.description}
@@ -89,7 +89,7 @@ export function Services() {
                         style={{ pointerEvents: 'none' }}
                       >
                         <div className="flex items-start gap-3 mb-2">
-                          <div className="w-10 h-10 rounded-full bg-[#ff67b1] flex items-center justify-center flex-shrink-0">
+                          <div className="w-10 h-10 rounded-full bg-[#ff67b1] flex items-center justify-center shrink-0">
                             <Icon className="w-5 h-5 text-white" />
                           </div>
                           <h4 

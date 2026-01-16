@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, Briefcase, Info, MessageCircle, TrendingUp, Star } from "lucide-react";
+import { Menu, X, Briefcase, Info, MessageCircle, TrendingUp } from "lucide-react";
 import logoImage from "../../assets/pink-lady-logo.png";
 import { motion, AnimatePresence } from "motion/react";
 import { useActiveSection } from "../shared/ActiveSectionContext";
@@ -32,7 +32,7 @@ export function Navigation() {
       }
       
       // Detect which section the logo is currently over
-      const sections = ["hero", "about", "services", "stats", "testimonials", "contact", "footer"];
+      const sections = ["hero", "about", "services", "stats", "contact", "footer"];
       const logoPosition = 100;
       
       for (const sectionId of sections) {
@@ -89,14 +89,13 @@ export function Navigation() {
     scrollToSection("hero");
   };
 
-  // Determine if current section is light (about/contact/testimonials) or dark (hero/services/stats/footer)
-  const isLightSection = activeSection === "about" || activeSection === "contact" || activeSection === "testimonials";
+  // Determine if current section is light (about/contact) or dark (hero/services/stats/footer)
+  const isLightSection = activeSection === "about" || activeSection === "contact";
 
   const navItems = [
     { id: "services", label: "Services", icon: Briefcase },
     { id: "about", label: "About", icon: Info },
     { id: "stats", label: "Stats", icon: TrendingUp },
-    { id: "testimonials", label: "Reviews", icon: Star },
     { id: "contact", label: "Contact", icon: MessageCircle },
   ];
 

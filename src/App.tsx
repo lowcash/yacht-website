@@ -2,7 +2,7 @@ import { Hero } from "./components/features/Hero";
 import { Services } from "./components/features/Services";
 import { Stats } from "./components/features/Stats";
 import { About } from "./components/features/About";
-import { Testimonials } from "./components/features/Testimonials";
+
 import { Contact } from "./components/features/Contact";
 import { Navigation } from "./components/layout/Navigation";
 import { SideDotsNavigation } from "./components/layout/SideDotsNavigation";
@@ -26,7 +26,6 @@ export default function App() {
           <Services />
           <About />
           <Stats />
-          <Testimonials />
           <Contact />
         </main>
         

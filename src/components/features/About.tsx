@@ -4,7 +4,7 @@ export function About() {
   return (
     <section id="about" className="snap-start relative min-h-screen flex flex-col justify-center overflow-hidden py-32 md:py-40">
       {/* Clean Minimalist Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#f8fbff] via-white to-[#f0f7ff]" />
+      <div className="absolute inset-0 bg-linear-to-br from-[#f8fbff] via-white to-[#f0f7ff]" />
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -35,26 +35,7 @@ export function About() {
                 </p>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-[#153c60]/10 space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-[#ff67b1]" />
-                  <p 
-                    className="text-[#153c60]/80 text-sm"
-                    style={{ fontFamily: 'Poppins, sans-serif' }}
-                  >
-                    <span className="font-medium text-[#153c60]">Business Hours:</span> Monday - Friday, 9:00 AM - 6:00 PM (ICT)
-                  </p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-[#153c60]/30" />
-                  <p 
-                    className="text-[#153c60]/70 text-sm italic"
-                    style={{ fontFamily: 'Poppins, sans-serif' }}
-                  >
-                    Emergency support available for urgent vessel needs
-                  </p>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
