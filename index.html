@@ -1,11 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Pink Lady Yachting Services • Premium Yacht Management in Thailand
-    </title>
+    <title>Pink Lady Yachting Services • Premium Yacht Management in Thailand</title>
     <meta
       name="description"
       content="Professional yacht support services in Thailand. Provisioning, logistics, maintenance, bunkering, and yacht management in Phuket, Krabi, and Koh Samui."
@@ -19,18 +17,12 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://pinkladyyachtingservices.com/" />
-    <meta
-      property="og:title"
-      content="Pink Lady Yachting Services - Premium Yacht Management in Thailand"
-    />
+    <meta property="og:title" content="Pink Lady Yachting Services - Premium Yacht Management in Thailand" />
     <meta
       property="og:description"
       content="Professional yacht support services in Thailand. Provisioning, logistics, maintenance, bunkering, and yacht management in Phuket, Krabi, and Koh Samui."
     />
-    <meta
-      property="og:image"
-      content="https://pinkladyyachtingservices.com/og-image.png"
-    />
+    <meta property="og:image" content="https://pinkladyyachtingservices.com/og-image.png" />
 
     <link rel="canonical" href="https://pinkladyyachtingservices.com/" />
 
@@ -106,13 +98,23 @@
       }
     </script>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA_TRACKING_ID%"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '%VITE_GA_TRACKING_ID%');
+    <script type="module">
+      const trackingId = import.meta.env.VITE_GA_TRACKING_ID
+
+      if (trackingId) {
+        const script = document.createElement('script')
+        script.async = true
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${trackingId}`
+        document.head.appendChild(script)
+
+        window.dataLayer = window.dataLayer || []
+        function gtag() {
+          window.dataLayer.push(arguments)
+        }
+
+        gtag('js', new Date())
+        gtag('config', trackingId)
+      }
     </script>
   </head>
   <body>
