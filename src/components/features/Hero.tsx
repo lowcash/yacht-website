@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { motion, useScroll, useTransform } from 'motion/react'
 
-import { scrollToSection } from '@/lib/section-navigation'
-
 import { SectionDivider } from '../shared/SectionDivider'
 import { Button } from '../ui/button'
 
@@ -25,6 +23,7 @@ export function Hero() {
   const [quote, setQuote] = useState('')
   const [displayedText, setDisplayedText] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [isVideoReady, setIsVideoReady] = useState(false)
 
   // Parallax effect
   const { scrollY } = useScroll()
@@ -35,6 +34,14 @@ export function Hero() {
     const randomQuote = QUOTES[Math.floor(Math.random() * QUOTES.length)]
     setQuote(randomQuote)
     setIsTyping(true)
+  }, [])
+
+  useEffect(() => {
+    const enableVideoDelay = window.setTimeout(() => {
+      setIsVideoReady(true)
+    }, 800)
+
+    return () => window.clearTimeout(enableVideoDelay)
   }, [])
 
   // Typing effect
@@ -55,6 +62,13 @@ export function Hero() {
     return () => clearInterval(typingInterval)
   }, [quote, isTyping])
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <section
       id='hero'
@@ -65,19 +79,22 @@ export function Hero() {
       {/* Background Video - More Visible with Parallax */}
       <motion.div className='pointer-events-none absolute inset-0 z-0 h-full w-full' style={{ y }}>
         <div className='pointer-events-none absolute inset-0 h-full w-full overflow-hidden'>
-          <iframe
-            src='https://www.youtube.com/embed/ZNehZ52kNb0?autoplay=1&mute=1&loop=1&playlist=ZNehZ52kNb0&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3'
-            className='pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-75'
-            style={{
-              width: 'max(200vw, 300vh)',
-              height: 'max(200vh, 300vw)',
-              minWidth: 'max(200vw, 300vh)',
-              minHeight: 'max(200vh, 300vw)',
-            }}
-            allow='autoplay; encrypted-media'
-            frameBorder='0'
-            title='Background Video'
-          />
+          {isVideoReady ? (
+            <iframe
+              src='https://www.youtube.com/embed/ZNehZ52kNb0?autoplay=1&mute=1&loop=1&playlist=ZNehZ52kNb0&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3'
+              className='pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-75'
+              style={{
+                width: 'max(200vw, 300vh)',
+                height: 'max(200vh, 300vw)',
+                minWidth: 'max(200vw, 300vh)',
+                minHeight: 'max(200vh, 300vw)',
+              }}
+              allow='autoplay; encrypted-media'
+              frameBorder='0'
+              loading='lazy'
+              title='Background Video'
+            />
+          ) : null}
           {/* Gradient Overlay - Top & Bottom only for cinematic look */}
           <div className='pointer-events-none absolute inset-0 bg-linear-to-b from-[#0a2540]/60 via-transparent to-[#0a2540]/70' />
           {/* Subtle side vignette */}
