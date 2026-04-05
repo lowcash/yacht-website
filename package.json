@@ -1,6 +1,23 @@
 {
   "name": "yacht-website",
   "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "dev:ip": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "preview:e2e": "vite preview --host 127.0.0.1 --port 3103",
+    "lint": "eslint src --max-warnings 0",
+    "lint:fix": "eslint src --fix",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:baseline": "playwright test tests/e2e/smoke.spec.ts",
+    "test:e2e:baseline:ci": "mkdir -p ./test-results && playwright test tests/e2e/smoke.spec.ts --reporter=json > ./test-results/playwright-baseline.json"
+  },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -48,19 +65,20 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.59.1",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^20.10.0",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react-swc": "^3.10.2",
+    "eslint": "^10.2.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^17.4.0",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.0",
     "vite": "6.3.5"
-  },
-  "scripts": {
-    "dev": "vite",
-    "dev:ip": "vite --host",
-    "build": "vite build",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
   }
 }
