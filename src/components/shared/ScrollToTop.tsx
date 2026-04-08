@@ -13,7 +13,7 @@ export function ScrollToTop() {
     const main = document.querySelector('main')
     if (!main) return
 
-    let hideTimeout: NodeJS.Timeout | null = null
+    let hideTimeout: ReturnType<typeof setTimeout> | null = null
     let isResetting = false
 
     const handleReset = () => {
@@ -57,7 +57,7 @@ export function ScrollToTop() {
       })
 
       // Light sections
-      const lightSections = ['about', 'contact', 'testimonials']
+      const lightSections = ['about', 'contact']
       setIsLightSection(lightSections.includes(currentSection))
     }
 

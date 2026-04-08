@@ -89,7 +89,7 @@ export function Navigation() {
     handleSectionNavigation('hero')
   }
 
-  // Determine if current section is light (about/contact) or dark (hero/services/stats/footer)
+  // Determine if current section is light (about/contact) or dark (hero/services)
   const isLightSection = activeSection === 'about' || activeSection === 'contact'
 
   const desktopBrandSurfaceStyle = isLightSection

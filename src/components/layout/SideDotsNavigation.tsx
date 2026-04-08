@@ -24,7 +24,7 @@ export function SideDotsNavigation() {
     if (isLightSection) {
       return '#ff67b1' // Pink for light sections
     }
-    return 'white' // White for dark sections (hero, services, stats)
+    return 'white' // White for dark sections (hero, services)
   }
 
   useEffect(() => {

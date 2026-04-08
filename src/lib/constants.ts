@@ -24,8 +24,6 @@ export const NAV_LINKS = [
   { name: 'Welcome', href: 'hero' },
   { name: 'Services', href: 'services' },
   { name: 'About', href: 'about' },
-  { name: 'Stats', href: 'stats' },
-  { name: 'Reviews', href: 'testimonials' },
   { name: 'Contact', href: 'contact' },
 ]
 
