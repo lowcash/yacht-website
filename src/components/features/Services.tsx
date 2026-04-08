@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
 import { SectionDivider } from "../shared/SectionDivider";
 import { SERVICES } from "../../lib/constants";
+import { scrollToSection } from "../../lib/section-navigation";
 
 export function Services() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -56,7 +57,14 @@ export function Services() {
                 <div
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  onClick={() => setSelectedIndex(index)}
+                  onClick={() => {
+                    const isMobileViewport = window.innerWidth < 768
+                    if (isMobileViewport) {
+                      setSelectedIndex(index)
+                    } else {
+                      scrollToSection('contact')
+                    }
+                  }}
                   className="group bg-white/10 backdrop-blur-xl border border-white/20 hover:border-[#ff67b1]/50 rounded-2xl p-5 md:p-6 text-center cursor-pointer transition-all duration-300 h-full flex flex-col"
                 >
                   <div className="flex justify-center mb-4">
@@ -175,6 +183,17 @@ export function Services() {
                   >
                     {SERVICES[selectedIndex].details}
                   </p>
+
+                  <button
+                    onClick={() => {
+                      setSelectedIndex(null)
+                      scrollToSection('contact')
+                    }}
+                    className="mt-6 w-full rounded-xl bg-[#ff67b1] px-6 py-3 text-white uppercase tracking-wide transition-all hover:bg-[#ff4da6] cursor-pointer"
+                    style={{ fontFamily: 'Anton, sans-serif' }}
+                  >
+                    Contact Us
+                  </button>
                 </>
               )}
             </motion.div>
