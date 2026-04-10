@@ -75,7 +75,10 @@ export function getHashSectionId() {
   return parseSectionId(hashId)
 }
 
-export function scrollToSection(sectionId: string, { behavior = 'smooth', updateHash = true }: ScrollTargetOptions = {}) {
+export function scrollToSection(
+  sectionId: string,
+  { behavior = 'smooth', updateHash = true }: ScrollTargetOptions = {},
+) {
   const parsedSectionId = parseSectionId(sectionId)
   if (!parsedSectionId) {
     return false

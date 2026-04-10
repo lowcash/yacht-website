@@ -15,7 +15,10 @@ async function gotoHome(page: Page) {
 }
 
 function getServiceCard(page: Page) {
-  return page.locator('#services div.cursor-pointer').filter({ has: page.locator('h3') }).first()
+  return page
+    .locator('#services div.cursor-pointer')
+    .filter({ has: page.locator('h3') })
+    .first()
 }
 
 test.describe('Smoke — page load', () => {
