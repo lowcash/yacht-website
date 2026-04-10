@@ -375,8 +375,8 @@ export function Navigation() {
                           }}
                           className={`group flex w-full cursor-pointer items-center gap-4 rounded-2xl border px-6 py-4 transition-all duration-300 md:py-5 ${
                             isActive
-                              ? 'border-[#ff67b1]/60 bg-[#ff67b1]/12'
-                              : 'border-white/20 bg-white/5 hover:border-[#ff67b1]/50 hover:bg-white/10'
+                              ? 'border-[#ff67b1]/30 bg-[#ff67b1]/10'
+                              : 'border-white/20 bg-white/10 hover:border-[#ff67b1]/50 hover:bg-white/15'
                           }`}
                           style={{
                             backdropFilter: 'blur(20px)',
@@ -384,9 +384,7 @@ export function Navigation() {
                             boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
                           }}
                         >
-                          <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-colors md:h-14 md:w-14 ${
-                            isActive ? 'bg-[#ff67b1]/35' : 'bg-[#ff67b1]/20 group-hover:bg-[#ff67b1]/35'
-                          }`}>
+                          <div className='flex h-12 w-12 shrink-0 items-center justify-center rounded-xl md:h-14 md:w-14'>
                             <Icon className={`transition-colors ${isActive ? 'text-[#ff67b1]' : 'text-white'}`} size={24} />
                           </div>
                           <span
