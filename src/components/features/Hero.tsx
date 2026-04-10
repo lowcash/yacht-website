@@ -75,22 +75,18 @@ export function Hero() {
       <motion.div className='pointer-events-none absolute inset-0 z-0 h-full w-full' style={{ y }}>
         <div className='pointer-events-none absolute inset-0 h-full w-full overflow-hidden'>
           {isVideoReady ? (
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
+            <iframe
+              src='https://www.youtube.com/embed/ZNehZ52kNb0?autoplay=1&mute=1&loop=1&playlist=ZNehZ52kNb0&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3'
               className='pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-75'
               style={{
                 width: 'max(200vw, 300vh)',
                 height: 'max(200vh, 300vw)',
                 minWidth: 'max(200vw, 300vh)',
                 minHeight: 'max(200vh, 300vw)',
-                objectFit: 'cover',
               }}
-            >
-              <source src='/video/hero.mp4' type='video/mp4' />
-            </video>
+              allow='autoplay; encrypted-media'
+              title='Background video'
+            />
           ) : null}
           {/* Gradient Overlay - Top & Bottom only for cinematic look */}
           <div className='pointer-events-none absolute inset-0 bg-linear-to-b from-[#0a2540]/60 via-transparent to-[#0a2540]/70' />

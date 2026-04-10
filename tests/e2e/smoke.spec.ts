@@ -28,6 +28,16 @@ test.describe('Smoke — page load', () => {
     await expect(hero).toBeVisible()
   })
 
+  test('background video iframe is rendered with YouTube src', async ({ page }) => {
+    // YouTube iframe is injected after an 800 ms delay (isVideoReady guard).
+    // We wait for it to appear rather than polling after a fixed sleep.
+    const iframe = page.locator('#hero iframe[src*="youtube.com/embed"]')
+    await expect(iframe).toBeAttached({ timeout: 5000 })
+    const src = await iframe.getAttribute('src')
+    expect(src).toContain('autoplay=1')
+    expect(src).toContain('mute=1')
+  })
+
   test('page title is set', async ({ page }) => {
     await expect(page).toHaveTitle(/Pink Lady|Yachting/i)
   })
