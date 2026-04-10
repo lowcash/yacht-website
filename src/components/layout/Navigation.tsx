@@ -4,7 +4,7 @@ import { Briefcase, Info, Menu, MessageCircle, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
 import logoImage from '../../assets/pink-lady-logo.png'
-import { scrollToSection } from '../../lib/section-navigation'
+import { resolveMainActiveSection, scrollToSection } from '../../lib/section-navigation'
 import { useActiveSection } from '../shared/ActiveSectionContext'
 
 export function Navigation() {
@@ -34,19 +34,9 @@ export function Navigation() {
         setScrolled(newScrolled)
       }
 
-      // Detect which section the logo is currently over
-      const sections = ['hero', 'services', 'about', 'contact']
-      const logoPosition = 100
-
-      for (const sectionId of sections) {
-        const section = document.getElementById(sectionId)
-        if (section) {
-          const rect = section.getBoundingClientRect()
-          if (rect.top <= logoPosition && rect.bottom >= logoPosition) {
-            setActiveSection(sectionId)
-            break
-          }
-        }
+      const currentSection = resolveMainActiveSection(100)
+      if (currentSection) {
+        setActiveSection(currentSection)
       }
     }
 

@@ -10,7 +10,7 @@ import { ActiveSectionProvider, useActiveSection } from './components/shared/Act
 import { ScrollToTop } from './components/shared/ScrollToTop'
 import { WhatsAppButton } from './components/shared/WhatsAppButton'
 import { Toaster } from './components/ui/sonner'
-import { getHashSectionId, scrollToSection, setSectionHash } from './lib/section-navigation'
+import { getHashSectionId, parseSectionId, scrollToSection, setSectionHash } from './lib/section-navigation'
 
 function AppContent() {
   const { activeSection, setActiveSection } = useActiveSection()
@@ -42,7 +42,12 @@ function AppContent() {
       return
     }
 
-    setSectionHash(activeSection as 'hero' | 'services' | 'about' | 'contact')
+    const sectionId = parseSectionId(activeSection)
+    if (!sectionId) {
+      return
+    }
+
+    setSectionHash(sectionId)
   }, [activeSection])
 
   return (

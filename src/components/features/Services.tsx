@@ -134,7 +134,7 @@ export function Services() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className='fixed inset-0 z-[500] flex items-center justify-center bg-black/60 p-6 backdrop-blur-md md:hidden'
+            className='fixed inset-0 z-500 flex items-center justify-center bg-black/60 p-6 backdrop-blur-md md:hidden'
             onClick={() => setSelectedIndex(null)}
           >
             <motion.div

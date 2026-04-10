@@ -5,6 +5,10 @@ async function gotoHome(page: Page) {
   await expect(page.locator('#hero')).toBeVisible()
 }
 
+function getServiceCard(page: Page) {
+  return page.locator('#services div.cursor-pointer').filter({ has: page.locator('h3') }).first()
+}
+
 test.describe('Floating controls layout', () => {
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
@@ -76,5 +80,70 @@ test.describe('Floating controls layout', () => {
     await expect(contactDot).toBeVisible()
     await contactDot.click()
     await expect(page.locator('#contact')).toBeInViewport({ ratio: 0.2 })
+  })
+})
+
+test.describe('Desktop navigation behavior', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await gotoHome(page)
+  })
+
+  test('desktop brand subtitle adapts contrast between dark and light sections', async ({ page }) => {
+    const subtitle = page.locator('[data-testid="desktop-brand-subtitle"]')
+    await expect(subtitle).toBeVisible()
+
+    await page.locator('[data-testid="side-dot-hero"]').click()
+
+    await expect
+      .poll(async () => {
+        const color = await subtitle.evaluate((element) => getComputedStyle(element).color)
+        return /255|oklab\(/.test(color)
+      })
+      .toBeTruthy()
+
+    const heroColor = await subtitle.evaluate((element) => getComputedStyle(element).color)
+
+    await page.locator('[data-testid="side-dot-about"]').click()
+
+    await expect
+      .poll(async () => {
+        const color = await subtitle.evaluate((element) => getComputedStyle(element).color)
+        return /21,\s*60,\s*96/.test(color)
+      })
+      .toBeTruthy()
+
+    const aboutColor = await subtitle.evaluate((element) => getComputedStyle(element).color)
+    expect(aboutColor).not.toBe(heroColor)
+  })
+
+  test('clicking a service card on desktop scrolls to #contact', async ({ page }) => {
+    await page.locator('#services').scrollIntoViewIfNeeded()
+    await page.waitForTimeout(400)
+
+    const firstCard = getServiceCard(page)
+    await expect(firstCard).toBeVisible()
+    await firstCard.click()
+
+    await expect
+      .poll(
+        () =>
+          page.evaluate(() => {
+            const main = document.querySelector('main')
+            return main ? main.scrollTop : window.scrollY
+          }),
+        { timeout: 5000 },
+      )
+      .toBeGreaterThan(50)
+
+    await expect(page.locator('#contact')).toBeInViewport({ ratio: 0.1 })
+  })
+
+  test('URL hash follows side-dot navigation and clears on hero', async ({ page }) => {
+    await page.locator('[data-testid="side-dot-contact"]').click()
+    await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('#contact')
+
+    await page.locator('[data-testid="side-dot-hero"]').click()
+    await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('')
   })
 })

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { ArrowUp } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
-import { scrollToSection } from '@/lib/section-navigation'
+import { resolveMainActiveSection, scrollToSection } from '@/lib/section-navigation'
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false)
@@ -44,17 +44,7 @@ export function ScrollToTop() {
         setIsVisible(false)
       }
 
-      // Detect section at bottom-right corner (where the button is)
-      const buttonY = window.innerHeight - 100 // approximate button position
-      const sections = document.querySelectorAll('section, div[id]')
-
-      let currentSection = 'hero'
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect()
-        if (rect.top <= buttonY && rect.bottom >= buttonY) {
-          currentSection = section.id || 'hero'
-        }
-      })
+      const currentSection = resolveMainActiveSection(window.innerHeight - 100) ?? 'hero'
 
       // Light sections
       const lightSections = ['about', 'contact']

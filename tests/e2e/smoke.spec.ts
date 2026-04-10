@@ -14,6 +14,10 @@ async function gotoHome(page: Page) {
   await expect(page.locator('#hero')).toBeVisible()
 }
 
+function getServiceCard(page: Page) {
+  return page.locator('#services div.cursor-pointer').filter({ has: page.locator('h3') }).first()
+}
+
 test.describe('Smoke — page load', () => {
   test.beforeEach(async ({ page }) => {
     await gotoHome(page)
@@ -46,36 +50,6 @@ test.describe('Navigation', () => {
     await expect(desktopBrand).toBeVisible()
   })
 
-  test('desktop brand subtitle adapts contrast between dark and light sections', async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 900 })
-
-    const subtitle = page.locator('[data-testid="desktop-brand-subtitle"]')
-    await expect(subtitle).toBeVisible()
-
-    await page.locator('[data-testid="side-dot-hero"]').click()
-
-    await expect
-      .poll(async () => {
-        const color = await subtitle.evaluate((element) => getComputedStyle(element).color)
-        return /255|oklab\(/.test(color)
-      })
-      .toBeTruthy()
-
-    const heroColor = await subtitle.evaluate((element) => getComputedStyle(element).color)
-
-    await page.locator('[data-testid="side-dot-about"]').click()
-
-    await expect
-      .poll(async () => {
-        const color = await subtitle.evaluate((element) => getComputedStyle(element).color)
-        return /21,\s*60,\s*96/.test(color)
-      })
-      .toBeTruthy()
-
-    const aboutColor = await subtitle.evaluate((element) => getComputedStyle(element).color)
-    expect(aboutColor).not.toBe(heroColor)
-  })
-
   test('hamburger menu opens on mobile', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 })
     const menuBtn = page.getByRole('button', { name: /toggle menu/i })
@@ -91,29 +65,17 @@ test.describe('Services section interactions', () => {
     await gotoHome(page)
   })
 
-  test('clicking a service card on desktop scrolls to #contact', async ({ page }) => {
-    await page.locator('#services').scrollIntoViewIfNeeded()
-    await page.waitForTimeout(400)
-
-    const firstCard = page.locator('#services [role="button"], #services button').first()
-    await expect(firstCard).toBeVisible()
-    await firstCard.click()
-
-    await expect.poll(() => page.evaluate(() => window.scrollY), { timeout: 5000 }).toBeGreaterThan(50)
-    await expect(page.locator('#contact')).toBeInViewport({ ratio: 0.1 })
-  })
-
   test('service card in mobile modal shows Contact Us button that scrolls to #contact', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 })
     await page.locator('#services').scrollIntoViewIfNeeded()
     await page.waitForTimeout(400)
 
-    const firstCard = page.locator('#services [role="button"], #services button').first()
+    const firstCard = getServiceCard(page)
     await expect(firstCard).toBeVisible()
     await firstCard.click()
 
     // Modal should open on mobile
-    const ctaButton = page.getByRole('button', { name: /contact us/i })
+    const ctaButton = page.getByRole('button', { name: 'Contact Us', exact: true })
     await expect(ctaButton).toBeVisible()
     await ctaButton.click()
 

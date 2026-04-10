@@ -1,7 +1,7 @@
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
 import { motion } from 'motion/react'
 
-import lineQRCode from '../../assets/line-qr-code.png'
+import lineQRCode from '../../assets/line-qr-code.webp'
 import { COMPANY_INFO } from '../../lib/constants'
 
 export function Contact() {
@@ -141,7 +141,7 @@ export function Contact() {
                 </p>
                 <div className='flex justify-center'>
                   <div className='rounded-2xl bg-white p-4 shadow-xl'>
-                    <img src={lineQRCode} alt='Line QR Code' className='h-40 w-40 object-contain md:h-48 md:w-48' />
+                    <img src={lineQRCode} alt='Line QR Code' className='h-40 w-40 object-contain md:h-48 md:w-48' width='384' height='384' />
                   </div>
                 </div>
                 <p className='text-sm opacity-90' style={{ fontFamily: 'Poppins, sans-serif' }}>

@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { motion } from 'motion/react'
 
-import { scrollToSection } from '@/lib/section-navigation'
+import { resolveMainActiveSection, scrollToSection } from '@/lib/section-navigation'
 
 import { useActiveSection } from '../shared/ActiveSectionContext'
 
@@ -28,20 +28,10 @@ export function SideDotsNavigation() {
   }
 
   useEffect(() => {
-    // Use a simpler approach: detect which section the center of viewport is currently in
     const handleScroll = () => {
-      const viewportCenter = window.innerHeight / 2
-
-      for (const section of sections) {
-        const element = document.getElementById(section.id)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          // Check if viewport center is within this section
-          if (rect.top <= viewportCenter && rect.bottom >= viewportCenter) {
-            setActiveSection(section.id)
-            break
-          }
-        }
+      const currentSection = resolveMainActiveSection(window.innerHeight / 2)
+      if (currentSection) {
+        setActiveSection(currentSection)
       }
     }
 
