@@ -133,7 +133,7 @@ export function Hero() {
               <Button
                 onClick={() => scrollToSection('contact')}
                 size='lg'
-                className='cursor-pointer rounded-full border-2 border-[#ff67b1]/30 bg-[#ff67b1] px-12 py-6 text-xl tracking-wider text-black uppercase shadow-2xl transition-all duration-300 hover:bg-[#ff67b1]/90 md:px-16 md:py-8 md:text-2xl'
+                className='cursor-pointer rounded-full border-2 border-[#ff67b1]/30 bg-[#ff67b1] px-12 py-6 text-xl tracking-wider text-white uppercase shadow-2xl transition-all duration-300 hover:bg-[#ff67b1]/90 md:px-16 md:py-8 md:text-2xl'
                 style={{ fontFamily: 'Anton, sans-serif' }}
               >
                 CONTACT NOW
