@@ -365,6 +365,7 @@ export function Navigation() {
                   <div className='grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4'>
                     {navItems.map((item, _index) => {
                       const Icon = item.icon
+                      const isActive = item.id === activeSection
                       return (
                         <button
                           key={item.id}
@@ -383,7 +384,9 @@ export function Navigation() {
                             <Icon className='text-white' size={24} />
                           </div>
                           <span
-                            className='text-lg text-white uppercase md:text-xl'
+                            className={`text-lg uppercase md:text-xl transition-colors ${
+                              isActive ? 'text-[#ff67b1]' : 'text-white'
+                            }`}
                             style={{ fontFamily: 'Anton, sans-serif', letterSpacing: '0.05em' }}
                           >
                             {item.label}
