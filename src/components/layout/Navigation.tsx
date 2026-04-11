@@ -375,23 +375,33 @@ export function Navigation() {
                           }}
                           className={`group flex w-full cursor-pointer items-center gap-4 rounded-2xl border px-6 py-4 transition-all duration-300 md:py-5 ${
                             isActive
-                              ? 'border-[#ff67b1]/30 bg-[#ff67b1]/10'
+                              ? 'border-white/20 bg-white/10'
                               : 'border-white/20 bg-white/10 hover:border-[#ff67b1]/50 hover:bg-white/15'
                           }`}
                           style={{
                             backdropFilter: 'blur(20px)',
                             WebkitBackdropFilter: 'blur(20px)',
-                            boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                            backgroundColor: isActive ? 'rgba(255, 176, 212, 0.08)' : undefined,
+                            borderColor: isActive ? 'rgba(255, 176, 212, 0.30)' : undefined,
+                            boxShadow: isActive
+                              ? '0 4px 24px rgba(255, 176, 212, 0.12), inset 0 1px 0 rgba(255, 176, 212, 0.15)'
+                              : '0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
                           }}
                         >
                           <div className='flex h-12 w-12 shrink-0 items-center justify-center rounded-xl md:h-14 md:w-14'>
-                            <Icon className={`transition-colors ${isActive ? 'text-[#ff67b1]' : 'text-white'}`} size={24} />
+                            <Icon
+                              className='transition-colors'
+                              style={{ color: isActive ? '#ffb0d4' : 'white' }}
+                              size={24}
+                            />
                           </div>
                           <span
-                            className={`text-lg uppercase transition-colors md:text-xl ${
-                              isActive ? 'text-[#ff67b1]' : 'text-white'
-                            }`}
-                            style={{ fontFamily: 'Anton, sans-serif', letterSpacing: '0.05em' }}
+                            className='text-lg uppercase transition-colors md:text-xl'
+                            style={{
+                              fontFamily: 'Anton, sans-serif',
+                              letterSpacing: '0.05em',
+                              color: isActive ? '#ffb0d4' : 'white',
+                            }}
                           >
                             {item.label}
                           </span>
