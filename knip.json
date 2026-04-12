@@ -1,5 +1,5 @@
 {
   "$schema": "https://knip.dev/schema.json",
-  "entry": ["scripts/run-lighthouse.mjs"],
-  "project": ["src/**/*.{ts,tsx}", "tests/**/*.ts", "scripts/**/*.mjs", "index.html"]
+  "entry": ["scripts/run-lighthouse.mjs", "index.html"],
+  "project": ["src/**/*.{ts,tsx}", "tests/**/*.ts", "scripts/**/*.mjs"]
 }

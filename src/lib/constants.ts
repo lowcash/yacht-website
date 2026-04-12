@@ -1,7 +1,5 @@
 import { Anchor, Banknote, FileText, Fuel, Package, Ship, TrendingUp, Wrench } from 'lucide-react'
 
-export const SITE_URL = 'https://pinkladyyachtingservices.com'
-
 type SocialLinks = {
   facebook?: string
   instagram?: string
@@ -19,13 +17,6 @@ export const COMPANY_INFO = {
   mapLink: 'https://maps.app.goo.gl/hFHh1NGk5wp2XoRg9',
   social: {} as SocialLinks,
 }
-
-export const NAV_LINKS = [
-  { name: 'Welcome', href: 'hero' },
-  { name: 'Services', href: 'services' },
-  { name: 'About', href: 'about' },
-  { name: 'Contact', href: 'contact' },
-]
 
 export const SERVICES = [
   {

@@ -9,9 +9,9 @@ import {
 } from '../../packages/navigation-core'
 import type { HashWriteMode, ScrollTargetOptions } from '../../packages/navigation-core'
 
-export const SECTION_IDS = ['hero', 'services', 'about', 'contact'] as const
+const SECTION_IDS = ['hero', 'services', 'about', 'contact'] as const
 
-export type SectionId = (typeof SECTION_IDS)[number]
+type SectionId = (typeof SECTION_IDS)[number]
 
 const sectionRegistry = createSectionRegistry({ sectionIds: SECTION_IDS })
 const HERO_SECTION_ID: SectionId = 'hero'
