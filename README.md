@@ -10,9 +10,8 @@ Professional service website for a yacht support company operating in Thailand (
 | React         | 18      | UI layer                            |
 | TypeScript    | 5       | Type safety                         |
 | Tailwind CSS  | 4       | Utility-first styling (precompiled) |
-| Framer Motion | —       | Scroll-reveal and micro-animations  |
-| Lucide React  | —       | Icons                               |
-| Radix UI      | —       | Accessible headless primitives      |
+| Framer Motion | 12.23   | Scroll-reveal and micro-animations  |
+| Lucide React  | 0.487   | Icons                               |
 | Playwright    | 1       | End-to-end tests                    |
 | Lighthouse    | 12      | Performance baseline                |
 
