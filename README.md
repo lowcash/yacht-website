@@ -36,19 +36,14 @@ tests/e2e/              # Playwright end-to-end tests
 ## Development Setup
 
 ```bash
-cp .env.example .env.local   # fill in VITE_GA_TRACKING_ID (optional)
 npm install
 npm run dev                  # http://localhost:5173
 ```
 
-## Environment Variables
+## Analytics
 
-Copy `.env.example` to `.env.local` for local development.
-
-### Google Analytics
-
-Set `VITE_GA_TRACKING_ID` in Vercel (e.g. `G-XXXXXXXXXX`).
-If the key is not set, GA scripts are not injected.
+Basic traffic visibility is handled through Vercel Web Analytics when the project is deployed on Vercel.
+Google Search Console remains the preferred source for search-query visibility.
 
 ## Commands
 

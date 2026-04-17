@@ -28,3 +28,4 @@ Current versions in use (update line items as your project upgrades):
 - Environment variables must use the `VITE_` prefix (not `NEXT_PUBLIC_`).
 - Framer Motion (`motion/react`) is used for animations; honour `prefers-reduced-motion`.
 - Floating buttons (ScrollToTop, WhatsAppButton) use `pointer-events-none` container + `max-w-6xl` inner wrapper — do not revert to direct `fixed left/right-*` positioning.
+- This is intentionally a lean SPA instruction stack. Do not import Next.js or fullstack data-persistence guidance into this repository.

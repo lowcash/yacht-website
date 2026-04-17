@@ -3,18 +3,8 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
 export default defineConfig(() => {
-  const gaTrackingId = process.env.VITE_GA_TRACKING_ID || '';
-  
   return {
-    plugins: [
-      react(),
-      {
-        name: 'html-transform',
-        transformIndexHtml(html) {
-          return html.replace(/%VITE_GA_TRACKING_ID%/g, gaTrackingId);
-        },
-      },
-    ],
+    plugins: [react()],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
