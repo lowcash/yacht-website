@@ -17,7 +17,7 @@ Professional service website for a yacht support company operating in Thailand (
 
 ## Architecture
 
-High-level structure, component organization, and design system notes live in [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
+High-level structure, key systems, and architectural decisions live in [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
 ## Development Setup
 
