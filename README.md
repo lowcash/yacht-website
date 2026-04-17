@@ -16,22 +16,9 @@ Professional service website for a yacht support company operating in Thailand (
 | Playwright    | 1       | End-to-end tests                    |
 | Lighthouse    | 12      | Performance baseline                |
 
-## Project Structure
+## Architecture
 
-```
-src/
-  components/
-    features/           # Page-section components (Hero, Services, About …)
-    shared/             # Reusable components (ScrollToTop, WhatsAppButton …)
-    ui/                 # Base UI primitives (shadcn/ui)
-  lib/                  # Utilities and constants
-  styles/               # Global styles
-  assets/               # Static assets (images, icons)
-  App.tsx               # Root component and section assembly
-  main.tsx              # Entry point
-index.html              # SPA shell with GA setup and structured data
-tests/e2e/              # Playwright end-to-end tests
-```
+High-level structure, component organization, and design system notes live in [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
 ## Development Setup
 
@@ -39,11 +26,6 @@ tests/e2e/              # Playwright end-to-end tests
 npm install
 npm run dev                  # http://localhost:5173
 ```
-
-## Analytics
-
-Basic traffic visibility is handled through Vercel Web Analytics when the project is deployed on Vercel.
-Google Search Console remains the preferred source for search-query visibility.
 
 ## Commands
 
@@ -69,10 +51,10 @@ npm run test:e2e
 npm run test:e2e:ui   # interactive UI mode
 ```
 
-## Deployment
+## Production
 
-Deployed on Vercel. Push to `main` triggers automatic deployment.
-Live URL: [https://pinkladyyachtingservices.com](https://pinkladyyachtingservices.com)
+Production URL: [https://pinkladyyachtingservices.com](https://pinkladyyachtingservices.com)  
+Current deployment target: Vercel
 
 ---
 
