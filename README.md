@@ -28,34 +28,22 @@ npm run dev                  # http://localhost:5173
 
 ## Commands
 
-| Command                            | Purpose                              |
-| ---------------------------------- | ------------------------------------ |
-| `npm run dev`                      | Start dev server (Vite, port 5173)   |
-| `npm run build`                    | Production build                     |
-| `npm run preview`                  | Serve production build locally       |
-| `npm run lint`                     | ESLint                               |
-| `npm run typecheck`                | TypeScript check                     |
-| `npm run format`                   | Prettier                             |
-| `npm run test:e2e`                 | Run all Playwright tests             |
-| `npm run test:e2e:baseline`        | Smoke tests (CI subset)              |
-| `npm run perf:lighthouse:baseline` | Build + Lighthouse + threshold check |
+- `npm run dev` starts the local development server.
+- `npm run lint` runs ESLint.
+- `npm run test:e2e` runs the Playwright end-to-end suite.
+- `npm run perf:lighthouse` runs local desktop and mobile Lighthouse audits.
+
+For the full script list, see `package.json`.
 
 ## Testing
 
 Two Playwright projects: `desktop-chrome`, `mobile-safari`.
 Tests run against a production preview build on port 3103 to avoid port conflicts.
 
-```bash
-npm run test:e2e
-npm run test:e2e:ui   # interactive UI mode
-```
-
 ## Production
 
 Production URL: [https://pinkladyyachtingservices.com](https://pinkladyyachtingservices.com)  
 Current deployment target: Vercel
-
----
 
 **Author**: Lowcash  
 **License**: MIT

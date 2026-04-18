@@ -2,45 +2,45 @@
 
 ## Overview
 
-This project is a single-page React application built with Vite, serving as a professional brochure site for yachting services. It emphasizes visual hierarchy, responsiveness, and clear calls-to-action.
+Yacht Website is a Vite-based single-page marketing site focused on section navigation, motion-led presentation, and always-visible conversion controls.
 
-## Directory Structure
+## Project Structure
 
 ```
 src/
-├── assets/          # Static assets (images, logos)
-├── components/      # React components
-│   ├── ui/          # Base UI elements
-│   └── [Feature].tsx # Feature-specific components (Hero, Services, etc.)
-├── lib/             # Utilities and constants
-├── styles/          # Global styles
-├── App.tsx          # Main application component
-└── main.tsx         # Entry point
+├── components/
+│   ├── features/               # Hero, About, Services, Contact
+│   ├── layout/                 # Header and side-dot navigation
+│   ├── shared/                 # Floating controls, section helpers, context
+│   └── ui/                     # Reusable styled primitives
+├── lib/                        # Section navigation helpers and adapters
+├── App.tsx                     # Root composition and section order
+└── main.tsx                    # SPA entry point
 ```
 
 ## Key Systems
 
-### 1. Navigation
+### 1. Section Navigation
 
-**Implementation**: `Navigation.tsx`
+**Implementation**: `src/components/layout/Navigation.tsx`, `src/components/layout/SideDotsNavigation.tsx`, `src/lib/navigation-core-adapter.ts`
 
-Sticky header with smooth scroll-to-anchor behavior. Mobile: hamburger menu triggers slide-out drawer. Keyboard-accessible (Escape to close). Uses `react-scroll` for smooth anchor linking without full page reloads.
+Header links, side dots, and scroll state share one section model through local navigation helpers and active-section context. That keeps anchor scrolling and active highlighting consistent across desktop and mobile navigation surfaces.
 
-### 2. Scroll-Reveal Animations
+### 2. Motion-Led Presentation
 
-**Implementation**: Framer Motion with Intersection Observer
+**Implementation**: `src/components/features/Hero.tsx`, `src/components/shared/SectionDivider.tsx`
 
-Components animate on viewport visibility: `initial` → `whileInView` → `exit` states. Respects `prefers-reduced-motion` media query (animations disabled for users who prefer reduced motion). Hero section, feature cards, and CTA buttons use entrance animations to guide user attention.
+Framer Motion drives hero, section divider, and CTA reveals as part of the content hierarchy rather than as decoration added afterward. Reduced-motion preferences are respected at component level.
 
-### 3. Responsive Layout System
+### 3. Floating Action Controls
 
-**Implementation**: Tailwind CSS breakpoints (mobile-first, CSS-first)
+**Implementation**: `src/components/shared/ScrollToTop.tsx`, `src/components/shared/WhatsAppButton.tsx`
 
-Mobile layout is the baseline; `md:` and `lg:` utilities scale up for tablet/desktop. Service grid adapts: 1 column mobile → 2 tablet → 3+ desktop. Floating buttons (WhatsApp, ScrollToTop) use `pointer-events-none` container + `max-w-6xl` inner wrapper to prevent layout shift.
+Persistent floating controls live in a shared fixed wrapper so contact and return-to-top actions stay available without fighting the main layout. The `pointer-events-none` container with a centered inner wrapper keeps positioning stable across breakpoints.
 
 ## Tech Stack Decisions
 
-- **Vite**: Fast build times and modern development experience.
-- **React**: Component-based architecture for maintainability.
-- **Tailwind CSS**: Rapid styling with built-in responsive modifiers.
-- **Lucide React**: Consistent, lightweight icon set.
+- **Vite SPA** keeps runtime and deployment simple for a brochure site with no server-side mutation or auth surface.
+- **Shared section-navigation helpers** keep header links, side dots, and scroll state aligned around one section model.
+- **Framer Motion with reduced-motion handling** supports motion-heavy presentation without dropping accessibility.
+- **Tailwind CSS** keeps responsive layout and floating-control positioning close to the components that own them.
