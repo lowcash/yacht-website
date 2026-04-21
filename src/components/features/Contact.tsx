@@ -298,6 +298,12 @@ export function Contact() {
               <p className='text-xs text-[#153c60]/40' style={{ fontFamily: 'Poppins, sans-serif' }}>
                 Proudly serving yacht owners and crews across Thailand's beautiful waters
               </p>
+              <p
+                className='mx-auto max-w-xl text-xs leading-relaxed text-[#153c60]/45'
+                style={{ fontFamily: 'Poppins, sans-serif' }}
+              >
+                {COMPANY_INFO.analyticsDisclosure}
+              </p>
             </div>
           </div>
         </div>

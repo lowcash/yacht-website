@@ -9,6 +9,8 @@ type SocialLinks = {
 export const COMPANY_INFO = {
   name: 'Pink Lady Yachting Support Services',
   tagline: 'Premium Yachting Support Services in Thailand',
+  analyticsDisclosure:
+    'This site uses anonymous Vercel Web Analytics for aggregate visit statistics without advertising cookies.',
   email: 'pinkladyyachtingservices@gmail.com',
   phone: '+66851904836',
   phoneDisplay: '+66 85 190 4836',
