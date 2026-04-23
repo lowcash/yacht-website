@@ -20,9 +20,9 @@ This is a client-side single-page application built with Vite. There are no serv
 
 ## Static Assets
 
-| Location | When to use |
-|----------|-------------|
-| `public/` | Files that need a stable public URL at the same path (favicons, `robots.txt`, `sitemap.xml`) |
+| Location      | When to use                                                                                           |
+| ------------- | ----------------------------------------------------------------------------------------------------- |
+| `public/`     | Files that need a stable public URL at the same path (favicons, `robots.txt`, `sitemap.xml`)          |
 | `src/assets/` | Images, fonts, icons imported directly in components — Vite processes them through the build pipeline |
 
 - Import images as ES modules: `import logo from '@/assets/logo.png'`
