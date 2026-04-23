@@ -1,0 +1,17 @@
+{
+  "name": "Pink Lady Yachting Services",
+  "short_name": "Pink Lady",
+  "description": "Professional yacht support services in Thailand.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#153c60",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ]
+}

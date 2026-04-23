@@ -26,6 +26,25 @@ test.describe('Smoke — page load', () => {
     await gotoHome(page)
   })
 
+  test('head metadata stays canonical and free of duplicate JSON-LD blocks', async ({ page }) => {
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://pinkladyyachtingservices.com/')
+    await expect(page.locator('link[rel="manifest"]')).toHaveAttribute('href', '/manifest.webmanifest')
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image')
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+      'content',
+      'https://pinkladyyachtingservices.com/og-image.png',
+    )
+
+    await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(1)
+
+    const manifestResponse = await page.request.get('/manifest.webmanifest')
+    expect(manifestResponse.ok()).toBe(true)
+
+    const manifest = (await manifestResponse.json()) as { name: string; short_name: string }
+    expect(manifest.name).toBe('Pink Lady Yachting Services')
+    expect(manifest.short_name).toBe('Pink Lady')
+  })
+
   test('hero section is visible', async ({ page }) => {
     const hero = page.locator('#hero')
     await expect(hero).toBeVisible()
