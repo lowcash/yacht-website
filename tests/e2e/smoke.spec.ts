@@ -5,7 +5,7 @@
  * the floating action buttons are positioned within the layout grid
  * (not anchored to the raw viewport edge on wide screens).
  *
- * Run against the Vite preview server: npm run preview (port 4173)
+ * Run against the Vite preview server: pnpm run preview (port 4173)
  */
 import { type Page, expect, test } from '@playwright/test'
 

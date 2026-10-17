@@ -30,8 +30,8 @@ This is a client-side single-page application built with Vite. There are no serv
 
 ## Build and Preview
 
-- Always run `npm run build` + `npm run preview` (production mode) before benchmarking performance.
-- Do not profile or diagnose issues against `npm run dev` — Vite dev mode skips optimizations.
+- Always run `pnpm run build` + `pnpm run preview` (production mode) before benchmarking performance.
+- Do not profile or diagnose issues against `pnpm run dev` — Vite dev mode skips optimizations.
 
 ## Performance Guardrails
 
