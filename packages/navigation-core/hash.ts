@@ -5,7 +5,7 @@ export function normalizeHash(rawHash: string) {
   return trimmedHash.length > 0 ? trimmedHash : null
 }
 
-export function hashForSection(sectionId: string, clearSectionId: string) {
+function hashForSection(sectionId: string, clearSectionId: string) {
   return sectionId === clearSectionId ? '' : `#${sectionId}`
 }
 

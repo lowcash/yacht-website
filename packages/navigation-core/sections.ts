@@ -1,4 +1,4 @@
-import type { OffsetResolverContext, OffsetStrategy, SectionRegistryConfig } from './types'
+import type { SectionRegistryConfig } from './types'
 
 export function createSectionRegistry<SectionId extends string>({ sectionIds }: SectionRegistryConfig<SectionId>) {
   const sectionIdSet = new Set(sectionIds)
@@ -12,16 +12,7 @@ export function createSectionRegistry<SectionId extends string>({ sectionIds }: 
   }
 
   return {
-    sectionIds,
     isSectionId,
     parseSectionId,
   }
-}
-
-export function resolveOffset(strategy: OffsetStrategy, context: OffsetResolverContext) {
-  if (typeof strategy === 'number') {
-    return strategy
-  }
-
-  return strategy(context)
 }

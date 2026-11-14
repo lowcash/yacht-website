@@ -5,7 +5,7 @@ import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   {
-    ignores: ['build', 'dist', 'node_modules'],
+    ignores: ['build', 'dist', 'node_modules', 'scripts/**/*.mjs', 'coverage'],
   },
   {
     files: ['**/*.{ts,tsx}'],
@@ -14,6 +14,7 @@ export default tseslint.config(
       ecmaVersion: 2020,
       globals: {
         ...globals.browser,
+        ...globals.node,
       },
       parserOptions: {
         ecmaFeatures: { jsx: true },
@@ -26,8 +27,8 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      // Math.random() inside useMemo([]) is acceptable — only runs on mount
       'react-hooks/purity': 'off',
+      'react-hooks/set-state-in-effect': 'off',
     },
   },
 )

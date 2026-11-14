@@ -7,14 +7,16 @@ import { Services } from './components/features/Services'
 import { Navigation } from './components/layout/Navigation'
 import { SideDotsNavigation } from './components/layout/SideDotsNavigation'
 import { ActiveSectionProvider, useActiveSection } from './components/shared/ActiveSectionContext'
+import { MainScrollProvider, useMainScrollRef } from './components/shared/MainScrollContext'
+import { MotionProvider } from './components/shared/MotionProvider'
 import { ScrollToTop } from './components/shared/ScrollToTop'
 import { WhatsAppButton } from './components/shared/WhatsAppButton'
-import { Toaster } from './components/ui/sonner'
-import { getHashSectionId, parseSectionId, scrollToSection, setSectionHash } from './lib/section-navigation'
+import { getHashSectionId, parseSectionId, scrollToSection, setSectionHash } from './lib/navigation-core-adapter'
 
 function AppContent() {
   const { activeSection, setActiveSection } = useActiveSection()
   const hasInitializedHash = useRef(false)
+  const mainRef = useMainScrollRef()
 
   useEffect(() => {
     const applyHashNavigation = () => {
@@ -57,22 +59,12 @@ function AppContent() {
       <WhatsAppButton />
       <ScrollToTop />
 
-      <main className='h-screen snap-y snap-mandatory overflow-y-scroll'>
+      <main ref={mainRef} className='h-screen snap-y snap-mandatory overflow-y-scroll'>
         <Hero />
         <Services />
         <About />
         <Contact />
       </main>
-
-      <Toaster
-        position='top-right'
-        richColors
-        toastOptions={{
-          style: {
-            fontFamily: 'Poppins, sans-serif',
-          },
-        }}
-      />
     </div>
   )
 }
@@ -80,7 +72,11 @@ function AppContent() {
 export default function App() {
   return (
     <ActiveSectionProvider>
-      <AppContent />
+      <MainScrollProvider>
+        <MotionProvider>
+          <AppContent />
+        </MotionProvider>
+      </MainScrollProvider>
     </ActiveSectionProvider>
   )
 }

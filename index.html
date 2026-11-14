@@ -24,9 +24,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap"
+      />
+    </noscript>
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Pink Lady Yachting Services" />
@@ -58,25 +71,15 @@
         "email": "pinkladyyachtingservices@gmail.com",
         "address": {
           "@type": "PostalAddress",
+          "streetAddress": "141, 2, Mai Khao, Thalang District, Phuket 83110, Thailand",
           "addressCountry": "Thailand",
-          "addressRegion": "Phuket, Krabi, Koh Samui"
+          "addressRegion": "Phuket"
         },
         "areaServed": [
-          {
-            "@type": "City",
-            "name": "Phuket"
-          },
-          {
-            "@type": "City",
-            "name": "Krabi"
-          },
-          {
-            "@type": "City",
-            "name": "Koh Samui"
-          }
+          { "@type": "City", "name": "Phuket" },
+          { "@type": "City", "name": "Krabi" },
+          { "@type": "City", "name": "Koh Samui" }
         ],
-        "priceRange": "$$",
-        "sameAs": ["https://www.facebook.com/PinkLadyYachtingServices", "https://www.instagram.com/pinklady_yachting"],
         "knowsAbout": [
           "Yacht support",
           "Yacht management",
@@ -85,47 +88,7 @@
           "Bunkering",
           "Yacht maintenance",
           "Marine services"
-        ],
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "18:00"
-        },
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Yacht Support Services",
-          "itemListElement": [
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Yacht Provisioning"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Yacht Logistics"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Yacht Maintenance"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Bunkering Services"
-              }
-            }
-          ]
-        }
+        ]
       }
     </script>
   </head>
