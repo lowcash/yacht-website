@@ -1,16 +1,6 @@
-import { type Page, expect, test } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
-async function gotoHome(page: Page) {
-  await page.goto('/', { waitUntil: 'domcontentloaded' })
-  await expect(page.locator('#hero')).toBeVisible()
-}
-
-function getServiceCard(page: Page) {
-  return page
-    .locator('#services div.cursor-pointer')
-    .filter({ has: page.locator('h3') })
-    .first()
-}
+import { getServiceCard, gotoHome } from './helpers'
 
 test.describe('Floating controls layout', () => {
   test.beforeEach(async ({ page }) => {
@@ -112,7 +102,7 @@ test.describe('Desktop navigation behavior', () => {
     await expect
       .poll(async () => {
         const color = await subtitle.evaluate((element) => getComputedStyle(element).color)
-        return /21,\s*60,\s*96/.test(color)
+        return /21,\s*60,\s*96|15,\s*46,\s*74|#0f2e4a/.test(color)
       })
       .toBeTruthy()
 
@@ -122,7 +112,7 @@ test.describe('Desktop navigation behavior', () => {
 
   test('clicking a service card on desktop scrolls to #contact', async ({ page }) => {
     await page.locator('#services').scrollIntoViewIfNeeded()
-    await page.waitForTimeout(400)
+    await expect(page.locator('#services h2')).toBeVisible()
 
     const firstCard = getServiceCard(page)
     await expect(firstCard).toBeVisible()

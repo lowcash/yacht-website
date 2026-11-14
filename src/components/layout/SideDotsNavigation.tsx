@@ -1,55 +1,17 @@
-import { useEffect } from 'react'
+import { m } from 'motion/react'
 
-import { motion } from 'motion/react'
-
-import { resolveMainActiveSection, scrollToSection } from '@/lib/section-navigation'
-
-import { useActiveSection } from '../shared/ActiveSectionContext'
-
-const sections = [
-  { id: 'hero', label: 'Welcome' },
-  { id: 'services', label: 'Services' },
-  { id: 'about', label: 'About' },
-  { id: 'contact', label: 'Contact' },
-]
+import { useActiveSection } from '@/components/shared/ActiveSectionContext'
+import { NAV_SECTIONS, isLightSection } from '@/lib/constants'
+import { scrollToSection } from '@/lib/navigation-core-adapter'
 
 export function SideDotsNavigation() {
-  const { activeSection, setActiveSection } = useActiveSection()
-  // Define which sections have light backgrounds (need dark text)
-  const lightSections = ['about', 'contact']
-  const isLightSection = lightSections.includes(activeSection)
-
-  // Tooltip color based on active section
-  const getTooltipColor = () => {
-    if (isLightSection) {
-      return '#ff67b1' // Pink for light sections
-    }
-    return 'white' // White for dark sections (hero, services)
-  }
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentSection = resolveMainActiveSection(window.innerHeight / 2)
-      if (currentSection) {
-        setActiveSection(currentSection)
-      }
-    }
-
-    // Listen to scroll on main element
-    const mainElement = document.querySelector('main')
-    if (mainElement) {
-      mainElement.addEventListener('scroll', handleScroll)
-      handleScroll() // Initial call
-      return () => mainElement.removeEventListener('scroll', handleScroll)
-    } else {
-      window.addEventListener('scroll', handleScroll)
-      handleScroll() // Initial call
-      return () => window.removeEventListener('scroll', handleScroll)
-    }
-  }, [setActiveSection])
+  const { activeSection } = useActiveSection()
+  const light = isLightSection(activeSection)
+  const tooltipColor = light ? '#ff67b1' : 'white'
 
   return (
-    <div
+    <nav
+      aria-label='Section navigation'
       className='pointer-events-none fixed inset-x-0 hidden w-full lg:block'
       style={{ top: '50%', transform: 'translateY(-50%)', zIndex: 70 }}
     >
@@ -59,53 +21,51 @@ export function SideDotsNavigation() {
           data-testid='side-dots-navigation'
           style={{ pointerEvents: 'auto', zIndex: 70 }}
         >
-          {sections.map((section) => (
+          {NAV_SECTIONS.map((section) => (
             <div key={section.id} className='group relative'>
-              {/* Tooltip - Minimalist Header Style */}
               <div
                 className='pointer-events-none absolute top-1/2 right-full mr-4 -translate-y-1/2 text-sm tracking-wide whitespace-nowrap uppercase opacity-0 transition-opacity duration-200 group-hover:opacity-100'
                 style={{
                   fontFamily: 'Anton, sans-serif',
-                  color: getTooltipColor(),
+                  color: tooltipColor,
                   textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
                 }}
               >
                 {section.label}
               </div>
 
-              {/* Dot */}
-              <motion.button
+              <m.button
+                type='button'
                 onClick={() => scrollToSection(section.id)}
                 whileHover={{ scale: 1.3 }}
                 whileTap={{ scale: 0.9 }}
-                className='relative h-3 w-3 cursor-pointer'
+                className='relative flex h-6 w-6 cursor-pointer items-center justify-center'
                 data-testid={`side-dot-${section.id}`}
                 aria-label={`Navigate to ${section.label}`}
+                aria-current={activeSection === section.id ? 'true' : undefined}
                 style={{ pointerEvents: 'auto' }}
               >
-                {/* Outer ring with glass effect */}
-                <motion.div
+                <m.div
                   initial={false}
                   animate={{
                     scale: activeSection === section.id ? 1.8 : 1,
                     opacity: activeSection === section.id ? 1 : 0.2,
                   }}
                   transition={{ duration: 0.4, ease: 'easeOut' }}
-                  className='absolute inset-0 rounded-full border-2 border-[#ff67b1]'
+                  className='absolute h-3 w-3 rounded-full border-2 border-[#ff67b1]'
                   style={{
                     boxShadow: activeSection === section.id ? '0 0 12px rgba(255, 103, 177, 0.4)' : 'none',
                   }}
                 />
 
-                {/* Inner dot with gradient */}
-                <motion.div
+                <m.div
                   initial={false}
                   animate={{
                     scale: activeSection === section.id ? 1 : 0.6,
                     backgroundColor: activeSection === section.id ? '#ff67b1' : '#153c60',
                   }}
                   transition={{ duration: 0.4, ease: 'easeOut' }}
-                  className='absolute inset-0 rounded-full'
+                  className='absolute h-3 w-3 rounded-full'
                   style={{
                     boxShadow:
                       activeSection === section.id
@@ -113,11 +73,11 @@ export function SideDotsNavigation() {
                         : '0 2px 4px rgba(0, 0, 0, 0.1)',
                   }}
                 />
-              </motion.button>
+              </m.button>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </nav>
   )
 }

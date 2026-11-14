@@ -7,11 +7,8 @@ import {
   resolveScrollBehavior,
   shouldWriteSectionUrl,
 } from '../../packages/navigation-core'
-import type { HashWriteMode, ScrollTargetOptions } from '../../packages/navigation-core'
-
-const SECTION_IDS = ['hero', 'services', 'about', 'contact'] as const
-
-type SectionId = (typeof SECTION_IDS)[number]
+import type { ScrollTargetOptions } from '../../packages/navigation-core/types'
+import { SECTION_IDS, type SectionId } from './constants'
 
 const sectionRegistry = createSectionRegistry({ sectionIds: SECTION_IDS })
 const HERO_SECTION_ID: SectionId = 'hero'
@@ -46,7 +43,7 @@ export function parseSectionId(value: string) {
   return sectionRegistry.parseSectionId(value)
 }
 
-export function setSectionHash(sectionId: SectionId, mode: HashWriteMode = 'replace') {
+export function setSectionHash(sectionId: SectionId) {
   const nextUrl = buildSectionUrl({
     pathname: window.location.pathname,
     search: window.location.search,
@@ -55,11 +52,6 @@ export function setSectionHash(sectionId: SectionId, mode: HashWriteMode = 'repl
   })
 
   if (!shouldWriteSectionUrl(getCurrentUrl(), nextUrl)) {
-    return
-  }
-
-  if (mode === 'push') {
-    window.history.pushState(null, '', nextUrl)
     return
   }
 

@@ -1,13 +1,15 @@
 import { MessageCircle } from 'lucide-react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
+
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
+import { COMPANY_INFO } from '@/lib/constants'
 
 export function WhatsAppButton() {
-  const phoneNumber = '66851904836' // Without + symbol for WhatsApp
-  const message = "Hello Pink Lady! I'd like to inquire about your yacht services."
+  const reducedMotion = usePrefersReducedMotion()
 
   const openWhatsApp = () => {
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
-    window.open(url, '_blank')
+    const url = `https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${encodeURIComponent(COMPANY_INFO.whatsappMessage)}`
+    window.open(url, '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -24,7 +26,8 @@ export function WhatsAppButton() {
           pointerEvents: 'none',
         }}
       >
-        <motion.button
+        <m.button
+          type='button'
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={openWhatsApp}
@@ -39,26 +42,26 @@ export function WhatsAppButton() {
           }}
           aria-label='Contact us on WhatsApp'
         >
-          {/* Pulse Animation - BEHIND the icon */}
-          <motion.div
-            className='absolute inset-0 rounded-full'
-            style={{
-              zIndex: 1,
-              background: 'radial-gradient(circle, rgba(37, 211, 102, 0.4) 0%, rgba(37, 211, 102, 0.2) 100%)',
-            }}
-            initial={{ scale: 1, opacity: 0.6 }}
-            animate={{
-              scale: [1, 1.4, 1.4, 1],
-              opacity: [0.6, 0, 0, 0.6],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatDelay: 1,
-            }}
-          />
+          {!reducedMotion ? (
+            <m.div
+              className='absolute inset-0 rounded-full'
+              style={{
+                zIndex: 1,
+                background: 'radial-gradient(circle, rgba(37, 211, 102, 0.4) 0%, rgba(37, 211, 102, 0.2) 100%)',
+              }}
+              initial={{ scale: 1, opacity: 0.6 }}
+              animate={{
+                scale: [1, 1.4, 1.4, 1],
+                opacity: [0.6, 0, 0, 0.6],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatDelay: 1,
+              }}
+            />
+          ) : null}
 
-          {/* Icon - ABOVE the pulse */}
           <MessageCircle
             className='relative h-5 w-5 transition-transform group-hover:scale-110 sm:h-6 sm:w-6'
             style={{
@@ -71,8 +74,7 @@ export function WhatsAppButton() {
             }}
           />
 
-          {/* Tooltip */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -10 }}
             whileHover={{ opacity: 1, x: 0 }}
             className='pointer-events-none absolute top-1/2 left-full ml-3 hidden -translate-y-1/2 rounded-xl border border-white/40 bg-white px-4 py-2 text-sm whitespace-nowrap text-[#153c60] shadow-lg backdrop-blur-xl sm:block'
@@ -83,8 +85,8 @@ export function WhatsAppButton() {
             }}
           >
             Quick Contact
-          </motion.div>
-        </motion.button>
+          </m.div>
+        </m.button>
       </div>
     </div>
   )

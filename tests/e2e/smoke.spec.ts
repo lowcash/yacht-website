@@ -1,25 +1,10 @@
 /**
  * Smoke tests for Pink Lady Yachting Services SPA.
- *
- * Verify that the core sections render, the navigation functions, and
- * the floating action buttons are positioned within the layout grid
- * (not anchored to the raw viewport edge on wide screens).
- *
- * Run against the Vite preview server: pnpm run preview (port 4173)
+ * Run against the Vite preview server on port 3103.
  */
-import { type Page, expect, test } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
-async function gotoHome(page: Page) {
-  await page.goto('/', { waitUntil: 'domcontentloaded' })
-  await expect(page.locator('#hero')).toBeVisible()
-}
-
-function getServiceCard(page: Page) {
-  return page
-    .locator('#services div.cursor-pointer')
-    .filter({ has: page.locator('h3') })
-    .first()
-}
+import { getServiceCard, gotoHome } from './helpers'
 
 test.describe('Smoke — page load', () => {
   test.beforeEach(async ({ page }) => {
@@ -50,9 +35,10 @@ test.describe('Smoke — page load', () => {
     await expect(hero).toBeVisible()
   })
 
-  test('background video iframe is rendered with YouTube src', async ({ page }) => {
-    // YouTube iframe is injected after an 800 ms delay (isVideoReady guard).
-    // We wait for it to appear rather than polling after a fixed sleep.
+  test('background video uses click-to-load facade', async ({ page }) => {
+    const facade = page.getByTestId('hero-video-facade')
+    await expect(facade).toBeVisible()
+    await facade.click()
     const iframe = page.locator('#hero iframe[src*="youtube.com/embed"]')
     await expect(iframe).toBeAttached({ timeout: 5000 })
     const src = await iframe.getAttribute('src')
@@ -86,7 +72,9 @@ test.describe('Navigation', () => {
     await page.setViewportSize({ width: 390, height: 844 })
     const menuBtn = page.getByRole('button', { name: /toggle menu/i })
     await expect(menuBtn).toBeVisible()
+    await expect(menuBtn).toHaveAttribute('aria-expanded', 'false')
     await menuBtn.click()
+    await expect(menuBtn).toHaveAttribute('aria-expanded', 'true')
     await expect(page.getByRole('button', { name: /close menu/i })).toBeVisible()
   })
 })
@@ -100,17 +88,28 @@ test.describe('Services section interactions', () => {
   test('service card in mobile modal shows Contact Us button that scrolls to #contact', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 })
     await page.locator('#services').scrollIntoViewIfNeeded()
-    await page.waitForTimeout(400)
+    await expect(page.locator('#services h2')).toBeVisible()
 
     const firstCard = getServiceCard(page)
     await expect(firstCard).toBeVisible()
     await firstCard.click()
 
-    // Modal should open on mobile
     const ctaButton = page.getByRole('button', { name: 'Contact Us', exact: true })
     await expect(ctaButton).toBeVisible()
     await ctaButton.click()
 
+    await expect
+      .poll(
+        () =>
+          page.evaluate(() => {
+            const main = document.querySelector('main')
+            return main ? main.scrollTop : window.scrollY
+          }),
+        { timeout: 5000 },
+      )
+      .toBeGreaterThan(50)
+
     await expect(page.locator('#contact')).toBeInViewport({ ratio: 0.1 })
   })
 })
+

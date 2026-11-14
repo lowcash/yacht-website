@@ -6,13 +6,14 @@ Professional service website for a yacht support company operating in Thailand (
 
 | Tool          | Version | Purpose                             |
 | ------------- | ------- | ----------------------------------- |
-| Vite          | 6       | Build tool and dev server (SPA)     |
-| React         | 18      | UI layer                            |
-| TypeScript    | 5       | Type safety                         |
-| Tailwind CSS  | 4       | Utility-first styling (precompiled) |
-| Framer Motion | 12.23   | Scroll-reveal and micro-animations  |
+| Vite          | 8       | Build tool and dev server (SPA)     |
+| React         | 19.3    | UI layer                            |
+| TypeScript    | 6       | Type safety                         |
+| Tailwind CSS  | 4       | Utility-first styling               |
+| Motion        | 14      | Scroll-reveal and micro-animations  |
 | Lucide React  | 0.487   | Icons                               |
-| Playwright    | 1       | End-to-end tests                    |
+| Playwright    | 1.65    | End-to-end tests                    |
+| Vitest        | 5       | Unit tests                          |
 | Lighthouse    | 12      | Performance baseline                |
 
 ## Architecture
@@ -23,13 +24,15 @@ High-level structure, key systems, and architectural decisions live in [docs/ARC
 
 ```bash
 pnpm install
-pnpm run dev                  # http://localhost:5173
+pnpm run dev                  # http://localhost:3000
 ```
 
 ## Commands
 
 - `pnpm run dev` starts the local development server.
 - `pnpm run lint` runs ESLint.
+- `pnpm run typecheck` runs TypeScript.
+- `pnpm run test:unit` runs Vitest unit tests.
 - `pnpm run test:e2e` runs the Playwright end-to-end suite.
 - `pnpm run perf:lighthouse` runs local desktop and mobile Lighthouse audits.
 

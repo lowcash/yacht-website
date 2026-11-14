@@ -1,23 +1,46 @@
 import { Anchor, Banknote, FileText, Fuel, Package, Ship, TrendingUp, Wrench } from 'lucide-react'
 
-type SocialLinks = {
-  facebook?: string
-  instagram?: string
-  linkedin?: string
+const SITE_URL = 'https://pinkladyyachtingservices.com'
+
+export const SECTION_IDS = ['hero', 'services', 'about', 'contact'] as const
+export type SectionId = (typeof SECTION_IDS)[number]
+
+const LIGHT_SECTION_IDS: readonly SectionId[] = ['about', 'contact']
+
+export const NAV_SECTIONS = [
+  { id: 'hero' as const, label: 'Welcome' },
+  { id: 'services' as const, label: 'Services' },
+  { id: 'about' as const, label: 'About' },
+  { id: 'contact' as const, label: 'Contact' },
+]
+
+export const MOBILE_NAV_ITEMS = [
+  { id: 'services' as const, label: 'Services' },
+  { id: 'about' as const, label: 'About' },
+  { id: 'contact' as const, label: 'Contact' },
+]
+
+export function isLightSection(sectionId: string) {
+  return (LIGHT_SECTION_IDS as readonly string[]).includes(sectionId)
 }
 
 export const COMPANY_INFO = {
   name: 'Pink Lady Yachting Support Services',
+  shortName: 'Pink Lady Yachting Services',
   tagline: 'Premium Yachting Support Services in Thailand',
+  description:
+    'Professional yacht support services in Thailand. Provisioning, logistics, maintenance, bunkering, and yacht management in Phuket, Krabi, and Koh Samui.',
   analyticsDisclosure:
     'This site uses anonymous Vercel Web Analytics for aggregate visit statistics without advertising cookies.',
   email: 'pinkladyyachtingservices@gmail.com',
   phone: '+66851904836',
   phoneDisplay: '+66 85 190 4836',
+  whatsappNumber: '66851904836',
+  whatsappMessage: "Hello Pink Lady! I'd like to inquire about your yacht services.",
   address: '141, 2, Mai Khao, Thalang District, Phuket 83110, Thailand',
   locationName: 'Phuket Yacht Haven Marina',
   mapLink: 'https://maps.app.goo.gl/hFHh1NGk5wp2XoRg9',
-  social: {} as SocialLinks,
+  url: SITE_URL,
 }
 
 export const SERVICES = [
@@ -82,3 +105,47 @@ export const SERVICES = [
     icon: TrendingUp,
   },
 ]
+
+export function buildOrganizationJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${COMPANY_INFO.url}/#business`,
+    name: COMPANY_INFO.shortName,
+    description: COMPANY_INFO.description,
+    url: `${COMPANY_INFO.url}/`,
+    telephone: COMPANY_INFO.phone,
+    email: COMPANY_INFO.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: COMPANY_INFO.address,
+      addressCountry: 'Thailand',
+      addressRegion: 'Phuket',
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Phuket' },
+      { '@type': 'City', name: 'Krabi' },
+      { '@type': 'City', name: 'Koh Samui' },
+    ],
+    knowsAbout: [
+      'Yacht support',
+      'Yacht management',
+      'Marine logistics',
+      'Yacht provisioning',
+      'Bunkering',
+      'Yacht maintenance',
+      'Marine services',
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Yacht Support Services',
+      itemListElement: SERVICES.slice(0, 4).map((service) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: service.title.startsWith('Yacht') ? service.title : `Yacht ${service.title}`,
+        },
+      })),
+    },
+  }
+}

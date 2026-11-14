@@ -6,10 +6,8 @@ export function About() {
       id='about'
       className='relative flex min-h-screen snap-start flex-col justify-center overflow-hidden py-32 md:py-40'
     >
-      {/* Clean Minimalist Background */}
       <div className='absolute inset-0 bg-linear-to-br from-[#f8fbff] via-white to-[#f0f7ff]' />
 
-      {/* Content */}
       <div className='relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8'>
         <div className='mx-auto max-w-4xl'>
           <div className='rounded-3xl border border-[#153c60]/5 bg-white/90 p-8 shadow-lg backdrop-blur-sm md:p-12 lg:p-16'>
@@ -21,7 +19,7 @@ export function About() {
                   textShadow: '0 1px 3px rgba(21, 60, 96, 0.08)',
                 }}
               >
-                AT <span className='text-[#ff67b1]'>PINK LADY</span>
+                AT <span className='text-[var(--color-pink-on-light)]'>PINK LADY</span>
                 <br />
                 YACHT SUPPORT SERVICES
               </h2>
@@ -41,7 +39,6 @@ export function About() {
         </div>
       </div>
 
-      {/* Section Divider */}
       <SectionDivider variant='light' />
     </section>
   )
