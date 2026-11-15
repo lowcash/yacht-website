@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-import { getServiceCard, gotoHome } from './helpers'
+import { getScrollY, gotoHome } from './helpers'
 
 test.describe('Floating controls layout', () => {
   test.beforeEach(async ({ page }) => {
@@ -8,71 +8,53 @@ test.describe('Floating controls layout', () => {
     await gotoHome(page)
   })
 
-  test('WhatsApp button is within the max-w-6xl container, not at raw viewport edge', async ({ page }) => {
-    const btn = page.getByRole('button', { name: /whatsapp/i })
-    await expect(btn).toBeVisible()
-    const box = await btn.boundingBox()
+  test('WhatsApp link sits bottom-right inside the viewport', async ({ page }) => {
+    const link = page.locator('.float-actions').getByRole('link', { name: /whatsapp/i })
+    await expect(link).toBeVisible()
+    await expect(link).toHaveAttribute('href', /^https:\/\/wa\.me\//)
+    const box = await link.boundingBox()
     expect(box).not.toBeNull()
-
-    if (!box) {
-      throw new Error('WhatsApp button should have measurable bounds')
-    }
-
-    const hasContainerAncestor = await btn.evaluate((element) => {
-      const container = element.closest('.max-w-6xl')
-      if (!container) return false
-
-      const style = getComputedStyle(container)
-      return style.maxWidth === '1152px'
-    })
-    expect(hasContainerAncestor).toBeTruthy()
-
-    expect(box.x).toBeGreaterThan(16)
+    if (!box) throw new Error('WhatsApp link should have measurable bounds')
+    expect(box.x + box.width).toBeLessThanOrEqual(1440 - 16)
+    expect(box.y + box.height).toBeLessThanOrEqual(900 - 16)
   })
 
-  test('ScrollToTop button is within the max-w-6xl container, not at raw viewport edge', async ({ page }) => {
-    await page.evaluate(() => {
-      const main = document.querySelector('main')
-      if (main) main.scrollTop = 600
-      else window.scrollTo(0, 600)
-    })
-
+  test('ScrollToTop appears after scrolling and returns to the top', async ({ page }) => {
     const btn = page.getByRole('button', { name: /scroll to top/i })
+    await expect(btn).toBeHidden()
+
+    await page.evaluate(() => window.scrollTo(0, 900))
     await expect(btn).toBeVisible()
-
-    const box = await btn.boundingBox()
-    expect(box).not.toBeNull()
-
-    if (!box) {
-      throw new Error('ScrollToTop button should have measurable bounds')
-    }
-
-    expect(box.x + box.width).toBeLessThan(1320)
+    await btn.click()
+    await expect.poll(() => getScrollY(page), { timeout: 5000 }).toBeLessThan(5)
   })
 
-  test('side dots stay inside container and support click-through navigation', async ({ page }) => {
-    const sideDots = page.locator('[data-testid="side-dots-navigation"]')
-    await expect(sideDots).toBeVisible()
+  test('route rail shows one port per section and supports click-through navigation', async ({ page }) => {
+    const rail = page.getByTestId('route-rail')
+    await expect(rail).toBeVisible()
+    const box = await rail.boundingBox()
+    expect(box).not.toBeNull()
+    if (!box) throw new Error('Route rail should have measurable bounds')
+    expect(box.x).toBeGreaterThanOrEqual(0)
+    expect(box.x + box.width).toBeLessThan(200)
 
-    const sideDotsBox = await sideDots.boundingBox()
-    expect(sideDotsBox).not.toBeNull()
+    await expect(rail.locator('a')).toHaveCount(4)
 
-    if (!sideDotsBox) {
-      throw new Error('Side dots container should have measurable bounds')
-    }
-
-    expect(sideDotsBox.x).toBeGreaterThan(16)
-    expect(sideDotsBox.x + sideDotsBox.width).toBeLessThan(1424)
-
-    const aboutDot = page.locator('[data-testid="side-dot-about"]')
-    await expect(aboutDot).toBeVisible()
-    await aboutDot.click()
+    await page.getByTestId('rail-port-about').click()
     await expect(page.locator('#about')).toBeInViewport({ ratio: 0.2 })
+    await expect(page.getByTestId('rail-port-about')).toHaveAttribute('aria-current', 'true')
 
-    const contactDot = page.locator('[data-testid="side-dot-contact"]')
-    await expect(contactDot).toBeVisible()
-    await contactDot.click()
+    await page.getByTestId('rail-port-contact').click()
     await expect(page.locator('#contact')).toBeInViewport({ ratio: 0.2 })
+  })
+
+  test('route line draws with scroll progress', async ({ page }) => {
+    const draw = page.locator('.rail .draw')
+    const read = () => draw.evaluate((el) => Number(getComputedStyle(el).getPropertyValue('--p')))
+    await page.evaluate(() => window.scrollTo(0, 0))
+    await expect.poll(read).toBeLessThan(0.05)
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight))
+    await expect.poll(read).toBeGreaterThan(0.95)
   })
 })
 
@@ -82,61 +64,32 @@ test.describe('Desktop navigation behavior', () => {
     await gotoHome(page)
   })
 
-  test('desktop brand subtitle adapts contrast between dark and light sections', async ({ page }) => {
-    const subtitle = page.locator('[data-testid="desktop-brand-subtitle"]')
-    await expect(subtitle).toBeVisible()
+  test('header marks the active section with aria-current', async ({ page }) => {
+    await expect(page.getByTestId('nav-hero')).toHaveAttribute('aria-current', 'true')
 
-    await page.locator('[data-testid="side-dot-hero"]').click()
-
-    await expect
-      .poll(async () => {
-        const color = await subtitle.evaluate((element) => getComputedStyle(element).color)
-        return /255|oklab\(/.test(color)
-      })
-      .toBeTruthy()
-
-    const heroColor = await subtitle.evaluate((element) => getComputedStyle(element).color)
-
-    await page.locator('[data-testid="side-dot-about"]').click()
-
-    await expect
-      .poll(async () => {
-        const color = await subtitle.evaluate((element) => getComputedStyle(element).color)
-        return /21,\s*60,\s*96|15,\s*46,\s*74|#0f2e4a/.test(color)
-      })
-      .toBeTruthy()
-
-    const aboutColor = await subtitle.evaluate((element) => getComputedStyle(element).color)
-    expect(aboutColor).not.toBe(heroColor)
+    await page.getByTestId('nav-about').click()
+    await expect(page.getByTestId('nav-about')).toHaveAttribute('aria-current', 'true')
+    await expect(page.getByTestId('nav-hero')).not.toHaveAttribute('aria-current', 'true')
   })
 
-  test('clicking a service card on desktop scrolls to #contact', async ({ page }) => {
+  test('service cards are not click-through links (details toggle instead)', async ({ page }) => {
     await page.locator('#services').scrollIntoViewIfNeeded()
-    await expect(page.locator('#services h2')).toBeVisible()
-
-    const firstCard = getServiceCard(page)
-    await expect(firstCard).toBeVisible()
-    await firstCard.click()
-
-    await expect
-      .poll(
-        () =>
-          page.evaluate(() => {
-            const main = document.querySelector('main')
-            return main ? main.scrollTop : window.scrollY
-          }),
-        { timeout: 5000 },
-      )
-      .toBeGreaterThan(50)
-
-    await expect(page.locator('#contact')).toBeInViewport({ ratio: 0.1 })
+    const y = await getScrollY(page)
+    await page.locator('#services .card h3').first().click()
+    await page.waitForTimeout(300)
+    expect(Math.abs((await getScrollY(page)) - y)).toBeLessThan(5)
   })
 
-  test('URL hash follows side-dot navigation and clears on hero', async ({ page }) => {
-    await page.locator('[data-testid="side-dot-contact"]').click()
+  test('URL hash follows navigation and clears on hero', async ({ page }) => {
+    await page.getByTestId('nav-contact').click()
     await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('#contact')
 
-    await page.locator('[data-testid="side-dot-hero"]').click()
+    await page.getByTestId('nav-hero').click()
     await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('')
+  })
+
+  test('deep link to #about lands on the About section', async ({ page }) => {
+    await page.goto('/#about', { waitUntil: 'domcontentloaded' })
+    await expect(page.locator('#about')).toBeInViewport({ ratio: 0.3 })
   })
 })

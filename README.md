@@ -4,17 +4,18 @@ Professional service website for a yacht support company operating in Thailand (
 
 ## Tech Stack
 
-| Tool          | Version | Purpose                             |
-| ------------- | ------- | ----------------------------------- |
-| Vite          | 8       | Build tool and dev server (SPA)     |
-| React         | 19.3    | UI layer                            |
-| TypeScript    | 6       | Type safety                         |
-| Tailwind CSS  | 4       | Utility-first styling               |
-| Motion        | 14      | Scroll-reveal and micro-animations  |
-| Lucide React  | 0.487   | Icons                               |
-| Playwright    | 1.65    | End-to-end tests                    |
-| Vitest        | 5       | Unit tests                          |
-| Lighthouse    | 12      | Performance baseline                |
+| Tool         | Version | Purpose                                                                       |
+| ------------ | ------- | ----------------------------------------------------------------------------- |
+| Vite         | 8       | Build tool and dev server (SPA)                                               |
+| React        | 19.3    | UI layer                                                                      |
+| TypeScript   | 6       | Type safety                                                                   |
+| Tailwind CSS | 4       | Utility-first styling                                                         |
+| CSS motion   | -       | Scroll-driven reveals, route line, view transitions (no JS animation library) |
+| Fontsource   | 5       | Self-hosted Barlow Condensed + Plus Jakarta Sans (latin, latin-ext)           |
+| Lucide React | 0.487   | Icons                                                                         |
+| Playwright   | 1.65    | End-to-end tests                                                              |
+| Vitest       | 5       | Unit tests                                                                    |
+| Lighthouse   | 12      | Performance baseline                                                          |
 
 ## Architecture
 

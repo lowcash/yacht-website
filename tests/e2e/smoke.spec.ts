@@ -35,15 +35,24 @@ test.describe('Smoke — page load', () => {
     await expect(hero).toBeVisible()
   })
 
-  test('background video uses click-to-load facade', async ({ page }) => {
-    const facade = page.getByTestId('hero-video-facade')
-    await expect(facade).toBeVisible()
-    await facade.click()
-    const iframe = page.locator('#hero iframe[src*="youtube.com/embed"]')
-    await expect(iframe).toBeAttached({ timeout: 5000 })
-    const src = await iframe.getAttribute('src')
-    expect(src).toContain('autoplay=1')
-    expect(src).toContain('mute=1')
+  test('hero has the brand h1, a static tagline and no video embed', async ({ page }) => {
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(/PINK LADY\s+YACHTING SERVICES/)
+    await expect(page.locator('.hero-tag')).not.toBeEmpty()
+    await expect(page.locator('#hero iframe')).toHaveCount(0)
+  })
+
+  test('prerendered HTML contains real content and no horizontal overflow', async ({ page, request }) => {
+    const html = await (await request.get('/')).text()
+    expect(html).toContain('<h1')
+    expect(html).toContain('COMPREHENSIVE')
+    expect(html).toContain('READY TO SET SAIL?')
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+    expect(overflow).toBeLessThanOrEqual(0)
+  })
+
+  test('marquee lists every service and duplicates it hidden from assistive tech', async ({ page }) => {
+    await expect(page.locator('.marquee ul').first().locator('li')).toHaveCount(8)
+    await expect(page.locator('.marquee ul[aria-hidden="true"] li')).toHaveCount(8)
   })
 
   test('page title is set', async ({ page }) => {
@@ -68,14 +77,30 @@ test.describe('Navigation', () => {
     await expect(desktopBrand).toBeVisible()
   })
 
-  test('hamburger menu opens on mobile', async ({ page }) => {
+  test('hamburger menu opens on mobile and navigates', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 })
     const menuBtn = page.getByRole('button', { name: /toggle menu/i })
     await expect(menuBtn).toBeVisible()
     await expect(menuBtn).toHaveAttribute('aria-expanded', 'false')
     await menuBtn.click()
     await expect(menuBtn).toHaveAttribute('aria-expanded', 'true')
-    await expect(page.getByRole('button', { name: /close menu/i })).toBeVisible()
+
+    const aboutLink = page.locator('#mobile-menu').getByRole('link', { name: 'About' })
+    await expect(aboutLink).toBeVisible()
+    await aboutLink.click()
+    await expect(menuBtn).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.locator('#about')).toBeInViewport({ ratio: 0.2 })
+  })
+
+  test('header links keep working without a view transition API', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.evaluate(() => {
+      // simulate engines without document.startViewTransition (smooth scroll fallback)
+      ;(document as unknown as { startViewTransition?: unknown }).startViewTransition = undefined
+    })
+    await page.getByTestId('nav-services').click()
+    await expect(page.locator('#services')).toBeInViewport({ ratio: 0.3 })
+    await expect(page.getByTestId('nav-services')).toHaveAttribute('aria-current', 'true')
   })
 })
 
@@ -85,31 +110,18 @@ test.describe('Services section interactions', () => {
     await gotoHome(page)
   })
 
-  test('service card in mobile modal shows Contact Us button that scrolls to #contact', async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 844 })
+  test('service cards render eight numbered items with native details', async ({ page }) => {
     await page.locator('#services').scrollIntoViewIfNeeded()
-    await expect(page.locator('#services h2')).toBeVisible()
+    await expect(page.locator('#services .card')).toHaveCount(8)
+    await expect(page.locator('#services .card details')).toHaveCount(8)
+    await expect(page.locator('#services .card-no').first()).toHaveText('01')
+  })
 
-    const firstCard = getServiceCard(page)
-    await expect(firstCard).toBeVisible()
-    await firstCard.click()
-
-    const ctaButton = page.getByRole('button', { name: 'Contact Us', exact: true })
-    await expect(ctaButton).toBeVisible()
-    await ctaButton.click()
-
-    await expect
-      .poll(
-        () =>
-          page.evaluate(() => {
-            const main = document.querySelector('main')
-            return main ? main.scrollTop : window.scrollY
-          }),
-        { timeout: 5000 },
-      )
-      .toBeGreaterThan(50)
-
-    await expect(page.locator('#contact')).toBeInViewport({ ratio: 0.1 })
+  test('opening details reveals the long description without leaving the section', async ({ page }) => {
+    await page.locator('#services').scrollIntoViewIfNeeded()
+    const card = getServiceCard(page)
+    await card.locator('summary').click()
+    await expect(card.locator('details p')).toBeVisible()
+    await expect(page.locator('#services')).toBeInViewport({ ratio: 0.1 })
   })
 })
-

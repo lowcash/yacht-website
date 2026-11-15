@@ -1,74 +1,42 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-
 import { useActiveSection } from '@/components/shared/ActiveSectionContext'
-import { scrollToSection } from '@/lib/navigation-core-adapter'
+import { BrandLogo } from '@/components/shared/BrandLogo'
+import { SectionLink } from '@/components/shared/SectionLink'
+import { NAV_SECTIONS } from '@/lib/constants'
 
-import { DesktopBrand } from './DesktopBrand'
-import { MobileMenuOverlay } from './MobileMenuOverlay'
-import { MobileNavBar } from './MobileNavBar'
+import { MobileMenu } from './MobileMenu'
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const { scrolled, requestScrollReset } = useActiveSection()
-  const navTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  useEffect(() => {
-    const main = document.querySelector('main')
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-      if (main) {
-        main.style.overflow = 'hidden'
-      }
-    } else {
-      document.body.style.overflow = ''
-      if (main) {
-        main.style.overflow = ''
-      }
-    }
-
-    return () => {
-      document.body.style.overflow = ''
-      if (main) {
-        main.style.overflow = ''
-      }
-    }
-  }, [isOpen])
-
-  useEffect(() => {
-    return () => {
-      if (navTimeoutRef.current) {
-        clearTimeout(navTimeoutRef.current)
-      }
-    }
-  }, [])
-
-  const handleSectionNavigation = useCallback((id: string) => {
-    setIsOpen(false)
-    if (navTimeoutRef.current) {
-      clearTimeout(navTimeoutRef.current)
-    }
-    navTimeoutRef.current = setTimeout(() => {
-      scrollToSection(id)
-    }, 300)
-  }, [])
-
-  const handleLogoClick = useCallback(() => {
-    if (isOpen) setIsOpen(false)
-    requestScrollReset()
-    handleSectionNavigation('hero')
-  }, [handleSectionNavigation, isOpen, requestScrollReset])
+  const { activeSection } = useActiveSection()
 
   return (
-    <>
-      <MobileNavBar
-        scrolled={scrolled}
-        isOpen={isOpen}
-        onToggle={() => setIsOpen((open) => !open)}
-        onClose={() => setIsOpen(false)}
-        onLogoClick={handleLogoClick}
-      />
-      <DesktopBrand scrolled={scrolled} />
-      <MobileMenuOverlay isOpen={isOpen} onClose={() => setIsOpen(false)} onNavigate={handleSectionNavigation} />
-    </>
+    <header className='site-header'>
+      <div className='wrap'>
+        <SectionLink id='hero' className='brand' aria-label='Pink Lady Yachting Services, home'>
+          <BrandLogo className='brand-logo' alt='' sizes='44px' />
+          <span className='brand-text'>
+            Pink Lady
+            <small>Yachting Services</small>
+          </span>
+        </SectionLink>
+
+        <nav className='nav' aria-label='Main'>
+          {NAV_SECTIONS.map((section) => (
+            <SectionLink
+              key={section.id}
+              id={section.id}
+              className={section.id === 'contact' ? 'cta' : undefined}
+              aria-current={activeSection === section.id ? 'true' : undefined}
+              data-testid={`nav-${section.id}`}
+            >
+              {section.label}
+            </SectionLink>
+          ))}
+        </nav>
+        <MobileMenu />
+      </div>
+      <div className='route-bar' aria-hidden='true'>
+        <i className='route-progress' />
+      </div>
+    </header>
   )
 }

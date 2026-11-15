@@ -6,8 +6,9 @@ export async function gotoHome(page: Page) {
 }
 
 export function getServiceCard(page: Page) {
-  return page
-    .locator('#services button')
-    .filter({ has: page.locator('h3') })
-    .first()
+  return page.locator('#services .card').first()
+}
+
+export async function getScrollY(page: Page) {
+  return page.evaluate(() => window.scrollY)
 }

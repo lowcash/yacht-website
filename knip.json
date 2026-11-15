@@ -9,5 +9,5 @@
     "src/lib/constants.ts"
   ],
   "project": ["src/**/*.{ts,tsx}", "packages/**/*.ts", "tests/**/*.ts", "scripts/**/*.mjs"],
-  "ignoreDependencies": ["tailwindcss"]
+  "ignoreDependencies": ["tailwindcss", "@fontsource/barlow-condensed", "@fontsource-variable/plus-jakarta-sans"]
 }

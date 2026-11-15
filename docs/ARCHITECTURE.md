@@ -23,15 +23,15 @@ src/
 
 ### 1. Section Navigation
 
-**Implementation**: `ActiveSectionProvider` (single `<main>` scroll listener), `Navigation.tsx` / `SideDotsNavigation.tsx`, `src/lib/navigation-core-adapter.ts`, `packages/navigation-core`
+**Implementation**: `ActiveSectionProvider` (rAF-throttled window scroll listener), `Navigation.tsx`, `RouteRail.tsx`, `SectionLink.tsx`, `HashSync.tsx`, `src/lib/navigation-core-adapter.ts`, `packages/navigation-core`
 
-Header links, side dots, and scroll state share one section-ID source (`SECTION_IDS` / `NAV_SECTIONS` in `constants.ts`) and one active-section context.
+The page scrolls on the document (no inner scroller). Header links, route rail, hero CTAs and the mobile menu are real `<a href="#id">` anchors; with JS they go through `navigateToSection` (View Transition crossfade, smooth `scrollIntoView` fallback, instant jump under reduced motion). One section-ID source (`SECTION_IDS` / `NAV_SECTIONS`) and one active-section context.
 
-### 2. Motion-Led Presentation
+### 2. Motion (CSS only)
 
-**Implementation**: `MotionProvider` (`LazyMotion` + `MotionConfig`), `Hero.tsx`, `SectionDivider.tsx`
+**Implementation**: `src/index.css`, `RouteProgressFallback.tsx`
 
-Motion uses `m.*` components under `LazyMotion`. A global CSS guard and `prefers-reduced-motion` checks gate infinite animations. Hero parallax reads scroll from the `<main>` scroller via `MainScrollContext`.
+Reveals use `animation-timeline: view()`, the route line/bar use `animation-timeline: scroll(root)` with a registered `@property --p`; both sit behind `@supports` and `prefers-reduced-motion: no-preference` (content is visible and the route fully drawn otherwise). The marquee is a CSS transform loop that becomes a static wrapped list under reduced motion. A small rAF listener sets `--p` only where scroll timelines are unsupported. The hero (LCP h1) is never animated.
 
 ### 3. Floating Action Controls
 
@@ -41,7 +41,7 @@ Persistent floating controls live in a shared fixed wrapper so contact and retur
 
 ## Tech Stack Decisions
 
-- **Vite SPA** keeps runtime and deployment simple for a brochure site with no server-side mutation or auth surface. Build-time prerender (`scripts/prerender.mjs`) writes static section HTML into `dist/index.html` for crawlers.
+- **Vite SPA** keeps runtime and deployment simple for a brochure site with no server-side mutation or auth surface. Build-time prerender (`scripts/prerender.mjs`, SSR build of the real `App`) writes the full static page into `dist/index.html`.
 - **Shared section-navigation helpers** keep header links, side dots, and scroll state aligned around one section model.
-- **Motion with reduced-motion handling** supports motion-heavy presentation without dropping accessibility.
+- **CSS-only motion** (scroll-driven animations, view transitions) with reduced-motion fallbacks keeps client JS minimal.
 - **Tailwind CSS 4** (`@tailwindcss/vite`) keeps responsive layout close to the components that own them.
