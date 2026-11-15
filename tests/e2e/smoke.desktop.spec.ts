@@ -48,6 +48,26 @@ test.describe('Floating controls layout', () => {
     await expect(page.locator('#contact')).toBeInViewport({ ratio: 0.2 })
   })
 
+  test('rail ports map to real section offsets', async ({ page }) => {
+    const rail = page.getByTestId('route-rail')
+    await expect(rail).toBeVisible()
+    await page.waitForTimeout(300)
+    const data = await page.evaluate(() => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const header = document.querySelector<HTMLElement>('.site-header')!.offsetHeight
+      const railBox = document.querySelector('.rail')!.getBoundingClientRect()
+      return ['hero', 'services', 'about', 'contact'].map((id) => {
+        const top = document.getElementById(id)!.getBoundingClientRect().top + window.scrollY
+        const expected = Math.min(1, Math.max(0, (id === 'hero' ? 0 : top - header) / maxScroll))
+        const port = document.querySelector(`[data-testid="rail-port-${id}"]`)!.getBoundingClientRect()
+        const actual = (port.top + port.height / 2 - railBox.top) / railBox.height
+        return { id, expected, actual }
+      })
+    })
+    for (const d of data) expect(Math.abs(d.expected - d.actual)).toBeLessThan(0.02)
+    for (let i = 1; i < data.length; i++) expect(data[i].actual).toBeGreaterThan(data[i - 1].actual)
+  })
+
   test('route line draws with scroll progress', async ({ page }) => {
     const draw = page.locator('.rail .draw')
     const read = () => draw.evaluate((el) => Number(getComputedStyle(el).getPropertyValue('--p')))

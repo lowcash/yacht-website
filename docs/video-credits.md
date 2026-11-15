@@ -1,27 +1,26 @@
 # Hero video credits
 
-All clips below were checked individually on their source page: free for commercial use, no attribution required.
+All six clips are from Pexels. Each page was opened and shows the licence label "Free" linking to the Pexels License (https://www.pexels.com/license/), which states: all photos and videos can be downloaded and used for free, commercial use is allowed, attribution is not required (appreciated, not mandatory), and content may be modified. Restrictions that matter here: do not resell unaltered copies, do not redistribute on other stock platforms, do not imply endorsement by identifiable people or brands. No Mixkit clip is used (the Mixkit "Free" clips found were interiors or low-resolution; "Restricted" clips are never used).
 
-- Mixkit: "Mixkit Stock Video Free License" (page states "commercial or personal use"): https://mixkit.co/license/#videoFree
-- Pexels: Pexels License (free for commercial use, attribution not required): https://www.pexels.com/license/
+Theme: general premium-yacht footage, no interiors: marina, sails from the air, sunset on the water, bow and deck from outside, hull cutting through water. The loop moves from wide to close.
 
-Loop: 6 close-up clips, 4.2 s each at 1.25x slow motion (clip 5 at 1.0x), 0.8 s cross-fades, first clip repeated at the end and trimmed so the loop is seamless (20.4 s, 24 fps, no audio). Graded with lifted blacks, teal shadows and warm highlights. Build: ffmpeg `xfade` + `curves`/`colorbalance`/`eq`, then CRF 29 (1080p H.264), CRF 31 (720p H.264), CRF 42 (1080p VP9); poster is a frame of the master (AVIF/WebP).
+Loop: 6 clips, 4.2 s each at 0.8x speed (1.25x slow motion), 0.8 s cross-fades, the first clip repeated at the end and the output trimmed so the loop is seamless (20.4 s, 24 fps, no audio). Graded with lifted blacks, teal shadows and warm highlights. Build: ffmpeg `xfade` + `curves`/`colorbalance`/`eq`, light `hqdn3d` denoise, then two-rate H.264 (1080p about 1.1 Mbit/s, 720p about 0.65 Mbit/s) and VP9 (1080p about 1 Mbit/s); the poster is a frame of the master (AVIF/WebP).
 
-| #   | Source | ID      | Title                                              | Page                                                                                         | Licence        | Shot                                        |
-| --- | ------ | ------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------- |
-| 1   | Pexels | 3491910 | Water Trail Produce By A Travelling Boat           | https://www.pexels.com/video/water-trail-produce-by-a-travelling-boat-3491910/               | Pexels License | hull cutting through water (also loop seam) |
-| 2   | Mixkit | 2049    | Motorboat steering wheel                           | https://mixkit.co/free-stock-video/motorboat-steering-wheel-2049/                            | Mixkit Free    | polished steel wheel, teak                  |
-| 3   | Pexels | 7007129 | A Panning Shot of Interior of a Yacht              | https://www.pexels.com/video/a-panning-shot-of-interior-of-a-yacht-7007129/                  | Pexels License | helm, leather                               |
-| 4   | Pexels | 7007353 | Interior of a Luxury Yacht                         | https://www.pexels.com/video/interior-of-a-luxury-yacht-7007353/                             | Pexels License | teak saloon                                 |
-| 5   | Pexels | 852286  | Sailboat Sailing During Sunset                     | https://www.pexels.com/video/sailboat-sailing-during-sunset-852286/                          | Pexels License | sail at sunset                              |
-| 6   | Mixkit | 34363   | Defocused view of the sunset reflection in the sea | https://mixkit.co/free-stock-video/defocused-view-of-the-sunset-reflection-in-the-sea-34363/ | Mixkit Free    | golden light on water                       |
+| #   | ID       | Title (Pexels)                           | Creator          | Page                                                                           | Licence        | Shot                                 |
+| --- | -------- | ---------------------------------------- | ---------------- | ------------------------------------------------------------------------------ | -------------- | ------------------------------------ |
+| 1   | 10656658 | Yachts Moored in Harbor                  | New Zealand      | https://www.pexels.com/video/yachts-moored-in-harbor-10656658/                 | Pexels License | marina with motor yachts (loop seam) |
+| 2   | 13169994 | Sailing on Sailboat near Coast           | Tom Fisk         | https://www.pexels.com/video/sailing-on-sailboat-near-coast-13169994/          | Pexels License | aerial pass close to a sloop         |
+| 3   | 852286   | Sailboat Sailing During Sunset           | Life Of Pix      | https://www.pexels.com/video/sailboat-sailing-during-sunset-852286/            | Pexels License | sail against the sun, golden water   |
+| 4   | 8916888  | Drone Footage of a Boat Sailing          | Yaroslav Shuraev | https://www.pexels.com/video/drone-footage-of-a-boat-sailing-8916888/          | Pexels License | aerial, sails over dark water        |
+| 5   | 7333913  | Yacht Sailing on the Ocean               | Pavel Danilyuk   | https://www.pexels.com/video/yacht-sailing-on-the-ocean-7333913/               | Pexels License | bow, rails and deck from outside     |
+| 6   | 3491910  | Water Trail Produce By A Travelling Boat | Tom Fisk         | https://www.pexels.com/video/water-trail-produce-by-a-travelling-boat-3491910/ | Pexels License | hull and wake, close to the water    |
 
-Creator names are not recorded (neither licence requires attribution). Locations are not Thailand.
+Locations are not Thailand.
 
 ## Not usable (checked, do not use)
 
-Many Mixkit clips are under the "Mixkit Restricted License" (personal use only). The previous hero loop used 27539 ("White yacht sailing out in the ocean"), which is restricted; it has been removed. Also restricted: 29398, 17271, 29449, 33497, 27952, 49357, 14481, 27428, 8676, 27506, 27519, 29405, 28741, 27925, 8680. Always check the licence line on the clip page before adding footage.
+Many Mixkit clips are under the "Mixkit Restricted License" (personal use only), for example 27539, 29398, 17271, 29449, 33497, 27952, 49357, 14481, 27428, 8676, 27506, 27519, 29405, 28741, 27925, 8680, and the harbour clips 20779, 20527, 29410. Always check the licence line on the clip page before adding footage. Rejected on quality: Pexels 12084675 (boat is a far-away dot), 4041712 (960x540 only).
 
 ## Gaps
 
-No free close-up of rope/rigging, a glass of water or an engine/throttle was found with a verified commercial licence. Pexels and Pixabay block automated search, so clips were found via web search and fetched by ID from the Pexels CDN.
+No free footage of rope or rigging close-ups, deck hardware or a crew at work with a verified licence was found; Pexels search results were mostly photos. Pexels and Pixabay block automated page downloads, so clips were found via web search, the licence label was read from each page, and files were fetched by ID from the Pexels CDN. Pixabay was not used.

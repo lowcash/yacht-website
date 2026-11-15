@@ -118,6 +118,10 @@ for (const viewport of VIEWPORTS) {
 
     test('WhatsApp and scroll-to-top form one aligned stack without overlap', async ({ page }) => {
       await page.evaluate(() => window.scrollTo(0, 1400))
+      // on mobile the stack hides while scrolling down; a small scroll up brings it back
+      await page.waitForTimeout(100)
+      await page.evaluate(() => window.scrollBy(0, -40))
+      await page.waitForTimeout(500) // let the slide-in transition settle
       const top = page.getByRole('button', { name: /scroll to top/i })
       const wa = page.locator('.float-actions').getByRole('link', { name: /whatsapp/i })
       await expect(top).toBeVisible()
@@ -133,6 +137,72 @@ for (const viewport of VIEWPORTS) {
       expect(b.x + b.width).toBeLessThanOrEqual(viewport.width)
       expect(b.y + b.height).toBeLessThanOrEqual(viewport.height)
       expect(a.y).toBeGreaterThanOrEqual(0)
+    })
+
+    test('floating stack: hides on scroll down on mobile only, returns on scroll up and near the edges', async ({
+      page,
+    }) => {
+      const stack = page.locator('.float-actions')
+      const hidden = () => stack.evaluate((el) => getComputedStyle(el).visibility === 'hidden')
+      const scrollTo = async (y: number) => {
+        await page.evaluate((top) => window.scrollTo(0, top), y)
+        await page.waitForTimeout(150)
+      }
+      await scrollTo(600)
+      await scrollTo(1200)
+      if (viewport.width < 768) {
+        await expect.poll(hidden).toBe(true)
+        await scrollTo(1100)
+        await expect.poll(hidden).toBe(false)
+        await scrollTo(1300)
+        await expect.poll(hidden).toBe(true)
+        await scrollTo(0)
+        await expect.poll(hidden).toBe(false)
+        await page.evaluate(() => window.scrollTo(0, 800))
+        await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight))
+        await expect.poll(hidden).toBe(false)
+      } else {
+        await expect.poll(hidden).toBe(false)
+        await scrollTo(1600)
+        expect(await hidden()).toBe(false)
+      }
+    })
+
+    test('navigation is slim (56-64px) with a hairline and no translucency', async ({ page }) => {
+      const header = await page.locator('.site-header').evaluate((el) => {
+        const cs = getComputedStyle(el)
+        return { height: el.getBoundingClientRect().height, border: cs.borderBottomWidth }
+      })
+      expect(header.height).toBeGreaterThanOrEqual(56)
+      expect(header.height).toBeLessThanOrEqual(64)
+      expect(header.border).toBe('1px')
+    })
+
+    test('only the hero is viewport-tall; other sections stack at content height without snapping', async ({
+      page,
+    }) => {
+      const info = await page.evaluate(() => {
+        const html = getComputedStyle(document.documentElement)
+        const body = getComputedStyle(document.body)
+        const sections = ['hero', 'services', 'about', 'contact'].map((id) => {
+          const el = document.getElementById(id)!
+          const cs = getComputedStyle(el)
+          const kids = [...el.children].reduce((sum, c) => sum + c.getBoundingClientRect().height, 0)
+          return { id, min: cs.minHeight, height: el.getBoundingClientRect().height, kids }
+        })
+        return { snapHtml: html.scrollSnapType, snapBody: body.scrollSnapType, sections }
+      })
+      expect(info.snapHtml).toBe('none')
+      expect(info.snapBody).toBe('none')
+      for (const s of info.sections) {
+        if (s.id === 'hero') {
+          expect(s.height).toBeGreaterThanOrEqual(viewport.height - 1)
+        } else {
+          expect(['0px', 'auto']).toContain(s.min)
+          // content plus symmetric padding only: no big empty area
+          expect(s.height - s.kids).toBeLessThanOrEqual(Math.max(viewport.width * 0.08, 64) * 2 + 4)
+        }
+      }
     })
 
     test('no decorative wave texture and no horizontal overflow', async ({ page }) => {
