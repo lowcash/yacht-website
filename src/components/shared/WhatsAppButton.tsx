@@ -2,7 +2,14 @@ import { MessageCircle } from 'lucide-react'
 
 import { COMPANY_INFO } from '@/lib/constants'
 
-export const WHATSAPP_URL = `https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${encodeURIComponent(COMPANY_INFO.whatsappMessage)}`
+export function buildWhatsAppUrl(service?: string | null) {
+  const text = service
+    ? `${COMPANY_INFO.whatsappMessage} I am interested in: ${service}.`
+    : COMPANY_INFO.whatsappMessage
+  return `https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`
+}
+
+const WHATSAPP_URL = buildWhatsAppUrl()
 
 export function WhatsAppButton() {
   return (

@@ -41,6 +41,27 @@ test.describe('Smoke — page load', () => {
     await expect(page.locator('#hero iframe')).toHaveCount(0)
   })
 
+  test('hero poster is the prioritised LCP image and the loop video attaches', async ({ page }) => {
+    const poster = page.locator('#hero .hero-media img')
+    await expect(poster).toHaveAttribute('fetchpriority', 'high')
+    const video = page.locator('#hero video')
+    await expect(video).toHaveCount(1)
+    await expect(video).toHaveJSProperty('muted', true)
+    await expect(video).toHaveJSProperty('loop', true)
+  })
+
+  test('hero shows poster only under reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.reload({ waitUntil: 'domcontentloaded' })
+    await expect(page.locator('#hero .hero-media img')).toBeAttached()
+    await expect(page.locator('#hero video')).toHaveCount(0)
+  })
+
+  test('only the route rail navigates sections (no side dots)', async ({ page }) => {
+    await expect(page.getByTestId('route-rail')).toHaveCount(1)
+    await expect(page.locator('[data-testid*="dot"]')).toHaveCount(0)
+  })
+
   test('prerendered HTML contains real content and no horizontal overflow', async ({ page, request }) => {
     const html = await (await request.get('/')).text()
     expect(html).toContain('<h1')
@@ -50,9 +71,9 @@ test.describe('Smoke — page load', () => {
     expect(overflow).toBeLessThanOrEqual(0)
   })
 
-  test('marquee lists every service and duplicates it hidden from assistive tech', async ({ page }) => {
-    await expect(page.locator('.marquee ul').first().locator('li')).toHaveCount(8)
-    await expect(page.locator('.marquee ul[aria-hidden="true"] li')).toHaveCount(8)
+  test('service strip lists every service and has no animation', async ({ page }) => {
+    await expect(page.locator('.strip li')).toHaveCount(8)
+    expect(await page.locator('.strip').evaluate((el) => getComputedStyle(el).animationName)).toBe('none')
   })
 
   test('page title is set', async ({ page }) => {
@@ -110,18 +131,40 @@ test.describe('Services section interactions', () => {
     await gotoHome(page)
   })
 
-  test('service cards render eight numbered items with native details', async ({ page }) => {
+  test('service cards render eight numbered items with a details button each', async ({ page }) => {
     await page.locator('#services').scrollIntoViewIfNeeded()
     await expect(page.locator('#services .card')).toHaveCount(8)
-    await expect(page.locator('#services .card details')).toHaveCount(8)
+    await expect(page.locator('#services .card .card-more')).toHaveCount(8)
     await expect(page.locator('#services .card-no').first()).toHaveText('01')
   })
 
-  test('opening details reveals the long description without leaving the section', async ({ page }) => {
+  test('opening details shows the long description in a dialog without leaving the section', async ({ page }) => {
     await page.locator('#services').scrollIntoViewIfNeeded()
     const card = getServiceCard(page)
-    await card.locator('summary').click()
-    await expect(card.locator('details p')).toBeVisible()
+    await card.locator('.card-more').click()
+    await expect(card.getByRole('dialog')).toBeVisible()
+    await expect(card.locator('dialog p')).toBeVisible()
     await expect(page.locator('#services')).toBeInViewport({ ratio: 0.1 })
   })
+})
+
+test.describe('Service enquiry CTA', () => {
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1440, height: 900 },
+  ]) {
+    test(`opened card CTA scrolls to contact and prefills the service at ${viewport.width}px`, async ({ page }) => {
+      await page.setViewportSize(viewport)
+      await gotoHome(page)
+      const card = getServiceCard(page)
+      await card.scrollIntoViewIfNeeded()
+      await card.locator('.card-more').click()
+      await card.getByRole('link', { name: /ask about this service/i }).click()
+      await expect(page.locator('#contact')).toBeInViewport({ ratio: 0.1 })
+      await expect(page.locator('#contact .inquiry')).toContainText('Provisioning')
+      await expect(page.locator('#contact a[href^="https://wa.me/"]')).toHaveAttribute('href', /Provisioning/)
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+      expect(overflow).toBeLessThanOrEqual(0)
+    })
+  }
 })

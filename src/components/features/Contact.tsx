@@ -3,10 +3,16 @@ import { Mail, MapPin, Phone } from 'lucide-react'
 import lineQRCode from '@/assets/line-qr-code.webp'
 import { COMPANY_INFO } from '@/lib/constants'
 
-import { WHATSAPP_URL } from '../shared/WhatsAppButton'
+import { useServiceInquiry } from '../shared/ServiceInquiryContext'
+import { buildWhatsAppUrl } from '../shared/WhatsAppButton'
 import { Button } from '../ui/button'
 
 export function Contact() {
+  const { service, setService } = useServiceInquiry()
+  const mailto = service
+    ? `mailto:${COMPANY_INFO.email}?subject=${encodeURIComponent(`Enquiry: ${service}`)}`
+    : `mailto:${COMPANY_INFO.email}`
+
   return (
     <section id='contact' className='section contact'>
       <div className='wrap'>
@@ -18,6 +24,14 @@ export function Contact() {
 
         <div className='panel reveal'>
           <h3>GET IN TOUCH</h3>
+          {service ? (
+            <p className='inquiry' role='status'>
+              Enquiring about: <b>{service}</b>
+              <button type='button' onClick={() => setService(null)}>
+                Clear
+              </button>
+            </p>
+          ) : null}
           <ul className='contact-list'>
             <li>
               <a href={COMPANY_INFO.mapLink} target='_blank' rel='noopener noreferrer'>
@@ -42,7 +56,7 @@ export function Contact() {
               </a>
             </li>
             <li>
-              <a href={`mailto:${COMPANY_INFO.email}`}>
+              <a href={mailto}>
                 <span className='ico'>
                   <Mail aria-hidden='true' />
                 </span>
@@ -55,7 +69,7 @@ export function Contact() {
           </ul>
 
           <Button asChild variant='primary'>
-            <a href={WHATSAPP_URL} target='_blank' rel='noopener noreferrer'>
+            <a href={buildWhatsAppUrl(service)} target='_blank' rel='noopener noreferrer'>
               Message on WhatsApp
             </a>
           </Button>
