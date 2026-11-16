@@ -1,24 +1,23 @@
 # Hero video credits
 
-All six clips are from Pexels. Each page was opened and shows the licence label "Free" linking to the Pexels License (https://www.pexels.com/license/), which states: all photos and videos can be downloaded and used for free, commercial use is allowed, attribution is not required (appreciated, not mandatory), and content may be modified. Restrictions that matter here: do not resell unaltered copies, do not redistribute on other stock platforms, do not imply endorsement by identifiable people or brands. No Mixkit clip is used (the Mixkit "Free" clips found were interiors or low-resolution; "Restricted" clips are never used).
+All five clips are from Pixabay. For each clip the Pixabay page was fetched and shows the licence line "Free for use under the Pixabay Content License" (Pixabay Content License: free commercial use, attribution not required, content may be modified; not allowed: selling unaltered copies, implying endorsement by depicted people or brands). Files were fetched with plain `curl` from the public Pixabay CDN (`cdn.pixabay.com/video/.../<id>_small.mp4`, `_large.mp4` for 224160). Pexels pages answer HTTP 403 to automated requests, so no Pexels clip is used any more (the previous Pexels loop was replaced).
 
-Theme: moored luxury motor yachts only, no racing or sailing shots. Three calm marina shots: motor yachts at their berths on still teal water, a superyacht alongside a pontoon with a waterfront skyline (prestige without excess), and a second pass through the moored-yacht marina.
+Theme: an anchored superyacht in golden light, Phuket coast and bay with sailing boats underway, an aerial marina, a sailing yacht on turquoise water. No people in focus, no text, no watermarks. Four of five shots are tropical or Phuket; the marina and the superyacht are not Thailand.
 
-Loop: 3 segments of 5.5 s each at 0.8x speed (1.25x slow motion), 0.8 s cross-fades, the first segment repeated at the end and the output trimmed so the loop is seamless (18.2 s, 24 fps, no audio). Light grade (slightly lifted blacks, mild contrast/saturation, cool shadows, warm highlights). Build: ffmpeg `xfade` + `curves`/`colorbalance`/`eq`, light `hqdn3d` denoise, then H.264 (1080p about 1.1 Mbit/s, 720p about 0.65 Mbit/s) and VP9 (1080p about 1 Mbit/s); the poster is the first frame of the master (AVIF/WebP).
+| #   | ID     | Title (Pixabay)              | Author         | Page                                                                  | Licence label read                             | Used (source time)                            |
+| --- | ------ | ---------------------------- | -------------- | --------------------------------------------------------------------- | ---------------------------------------------- | --------------------------------------------- |
+| 1   | 224160 | Yacht, Luxury, Cruise        | FilipFilipovic | https://pixabay.com/videos/yacht-luxury-cruise-ship-224160/           | Free for use under the Pixabay Content License | superyacht at anchor, golden hour, 4-8.5 s    |
+| 2   | 332778 | Drone, Aerial, Phuket        | FlyMore        | https://pixabay.com/videos/drone-aerial-phuket-thailand-332778/       | Free for use under the Pixabay Content License | Phuket bay, sailing boats underway, 0.2-4.7 s |
+| 3   | 284684 | Marina, Bay, Boats, Ships    | phlyingdoctor  | https://pixabay.com/videos/marina-bay-boats-ships-yachts-284684/      | Free for use under the Pixabay Content License | aerial marina, 0.5-5 s and 4.5-9 s (two cuts) |
+| 4   | 237117 | Ocean, Sea, Aerial View      | Oleh_1977      | https://pixabay.com/videos/ocean-sea-aerial-view-copy-space-237117/   | Free for use under the Pixabay Content License | drone approach to a sailing yacht, 0.5-5 s    |
+| 5   | 332781 | Drone, Aerial, Phuket, Coast | FlyMore        | https://pixabay.com/videos/drone-aerial-phuket-thailand-coast-332781/ | Free for use under the Pixabay Content License | Phuket headland and sailing yacht, 1-5.5 s    |
 
-| #   | ID       | Title (Pexels)                                      | Creator     | Page                                                                                      | Licence        | Used                                                   |
-| --- | -------- | --------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------ |
-| 1   | 10656658 | Yachts Moored in Harbor                             | New Zealand | https://www.pexels.com/video/yachts-moored-in-harbor-10656658/                            | Pexels License | motor yachts moored, 0.5-6 s and 20-25.5 s (loop seam) |
-| 2   | 14717069 | Drone Footage of Yachts at Puteri Harbour, Malaysia | (Pexels)    | https://www.pexels.com/video/drone-footage-of-yachts-at-puteri-harbour-malaysia-14717069/ | Pexels License | superyacht at a pontoon, tropical, 2-7.5 s             |
+Loop: 6 shots of 4.5 s with 0.5 s cross-fades, the first shot repeated at the end (starting 0.5 s early) and the output trimmed at the end of that cross-fade, so the last frame is the first frame (24.5 s, 24 fps, no audio). Common grade: light `eq` (contrast, saturation), slight warm highlights and cool shadows, light `hqdn3d` denoise. Output: H.264 1080p (3.5 MB), VP9 1080p WebM (3.7 MB), H.264 720p (2.2 MB); the poster (AVIF/WebP) is the first frame of the 1080 MP4.
 
-Both pages are served under the Pexels License (free, commercial use, no attribution required). The pages block automated downloads (HTTP 403), so the licence label was taken from the Pexels search listing ("Free Stock Video") and files were fetched by ID from the Pexels CDN. Re-check the licence line on both pages when convenient.
+## Not used (checked)
 
-Locations are not Thailand (New Zealand and Malaysia); no free Thai marina clip with a verifiable Pexels licence was found. Removed from the previous loop (sailing shots): 13169994, 852286, 8916888, 7333913, 3491910.
-
-## Not usable (checked, do not use)
-
-Many Mixkit clips are under the "Mixkit Restricted License" (personal use only), for example 27539, 29398, 17271, 29449, 33497, 27952, 49357, 14481, 27428, 8676, 27506, 27519, 29405, 28741, 27925, 8680, and the harbour clips 20779, 20527, 29410. Always check the licence line on the clip page before adding footage. Rejected on quality: Pexels 12084675 (boat is a far-away dot), 4041712 (960x540 only).
+Pixabay 338174 (marina, black and white grade, does not match the colour grade), 291088 (sailboats only dots on the horizon), 345350 (author states it is AI-generated), 168923 and 272540 (portrait). Mixkit "Restricted" clips and Pexels clips (pages blocked, licence not readable) are not used.
 
 ## Gaps
 
-No free footage of rope or rigging close-ups, deck hardware or a crew at work with a verified licence was found; Pexels search results were mostly photos. Pexels and Pixabay block automated page downloads, so clips were found via web search, the licence label was read from each page, and files were fetched by ID from the Pexels CDN. Pixabay was not used.
+No free footage of rope or rigging close-ups, deck hardware or a crew at work with a readable licence was found. Pixabay licence text was read from each clip page; the site-wide licence page itself (pixabay.com/service/license-summary/) answers 403 to automated requests.

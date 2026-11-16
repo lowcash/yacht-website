@@ -37,7 +37,7 @@ Reveals use `animation-timeline: view()`, the header route bar uses `animation-t
 
 **Implementation**: `src/components/features/Hero.tsx`, `public/video/`, `public/poster.{avif,webp}`
 
-The LCP element is the poster `<img fetchpriority="high">` (AVIF/WebP) rendered in the prerendered HTML. After mount, a muted looping `<video>` (720p MP4 below 768px, then WebM, then 1080p MP4) is added unless `prefers-reduced-motion` or `navigator.connection.saveData` is set; it fades in on `playing`. The loop is three calm exterior marina shots of moored motor yachts (no sailing or racing footage, no interiors), about 18 s, lightly graded. A light, left-weighted navy scrim plus a text shadow keeps h1/CTA contrast above AA while the footage stays vivid. Both clips are Pexels (commercial use, no attribution); sources, licences and rejected clips are in `docs/video-credits.md`.
+The LCP element is the poster `<img fetchpriority="high">` (AVIF/WebP) rendered in the prerendered HTML. After mount, a muted looping `<video>` (720p MP4 below 768px, then WebM, then 1080p MP4) is added unless `prefers-reduced-motion` or `navigator.connection.saveData` is set; it fades in on `playing`. The loop is five Pixabay clips in six cuts (golden-hour superyacht at anchor, Phuket bay with sailing boats, aerial marina twice, sailing yacht on turquoise water, Phuket headland), 24.5 s with 0.5 s cross-fades and a seamless seam, one common grade, no people in focus or text. A light, left-weighted navy scrim plus a text shadow keeps h1/CTA contrast above AA while the footage stays vivid. All clips are under the Pixabay Content License (commercial use, no attribution); sources, authors, licence labels and rejected clips are in `docs/video-credits.md`.
 
 ### 4. Services and service enquiries
 
