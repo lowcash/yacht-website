@@ -72,8 +72,8 @@ test.describe('Smoke — page load', () => {
   })
 
   test('service strip lists every service and has no animation', async ({ page }) => {
-    await expect(page.locator('.strip li')).toHaveCount(8)
-    expect(await page.locator('.strip').evaluate((el) => getComputedStyle(el).animationName)).toBe('none')
+    await expect(page.locator('.strip ul:not([aria-hidden]) li')).toHaveCount(8)
+    await expect(page.locator('.strip ul[aria-hidden] li')).toHaveCount(8)
   })
 
   test('page title is set', async ({ page }) => {

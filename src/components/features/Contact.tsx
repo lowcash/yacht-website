@@ -32,53 +32,57 @@ export function Contact() {
               </button>
             </p>
           ) : null}
-          <ul className='contact-list'>
-            <li>
-              <a href={COMPANY_INFO.mapLink} target='_blank' rel='noopener noreferrer'>
-                <span className='ico'>
-                  <MapPin aria-hidden='true' />
-                </span>
-                <span>
-                  <small>{COMPANY_INFO.locationName}</small>
-                  <b>{COMPANY_INFO.address}</b>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href={`tel:${COMPANY_INFO.phone}`}>
-                <span className='ico'>
-                  <Phone aria-hidden='true' />
-                </span>
-                <span>
-                  <small>Phone</small>
-                  <b>{COMPANY_INFO.phoneDisplay}</b>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href={mailto}>
-                <span className='ico'>
-                  <Mail aria-hidden='true' />
-                </span>
-                <span>
-                  <small>Email</small>
-                  <b>{COMPANY_INFO.email}</b>
-                </span>
-              </a>
-            </li>
-          </ul>
+          <div className='panel-grid'>
+            <ul className='contact-list'>
+              <li>
+                <a href={COMPANY_INFO.mapLink} target='_blank' rel='noopener noreferrer'>
+                  <span className='ico'>
+                    <MapPin aria-hidden='true' />
+                  </span>
+                  <span>
+                    <small>{COMPANY_INFO.locationName}</small>
+                    <b>{COMPANY_INFO.address}</b>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href={`tel:${COMPANY_INFO.phone}`}>
+                  <span className='ico'>
+                    <Phone aria-hidden='true' />
+                  </span>
+                  <span>
+                    <small>Phone</small>
+                    <b>{COMPANY_INFO.phoneDisplay}</b>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href={mailto}>
+                  <span className='ico'>
+                    <Mail aria-hidden='true' />
+                  </span>
+                  <span>
+                    <small>Email</small>
+                    <b>{COMPANY_INFO.email}</b>
+                  </span>
+                </a>
+              </li>
+            </ul>
 
-          <Button asChild variant='primary'>
-            <a href={buildWhatsAppUrl(service)} target='_blank' rel='noopener noreferrer'>
-              Message on WhatsApp
-            </a>
-          </Button>
+            <div className='panel-side'>
+              <Button asChild variant='primary'>
+                <a href={buildWhatsAppUrl(service)} target='_blank' rel='noopener noreferrer'>
+                  Message on WhatsApp
+                </a>
+              </Button>
 
-          <div className='qr'>
-            <img src={lineQRCode} alt='Line QR Code' width={384} height={384} loading='lazy' decoding='async' />
-            <div>
-              <h3>CONNECT ON LINE</h3>
-              <p>Scan to chat instantly</p>
+              <div className='qr'>
+                <img src={lineQRCode} alt='Line QR Code' width={384} height={384} loading='lazy' decoding='async' />
+                <div>
+                  <h3>CONNECT ON LINE</h3>
+                  <p>Scan to chat instantly</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

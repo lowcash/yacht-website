@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { COMPANY_INFO, PORTS, pickTagline } from '@/lib/constants'
 
@@ -14,10 +14,14 @@ function shouldPlayVideo() {
   return !reduced && !saveData
 }
 
+/** Slightly slower than real time: calmer motion and longer, softer cross-fades behind the text. */
+const VIDEO_RATE = 0.88
+
 export function Hero() {
   const [tagline] = useState(() => pickTagline())
   const [playVideo, setPlayVideo] = useState(false)
   const [videoReady, setVideoReady] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     setPlayVideo(shouldPlayVideo())
@@ -33,6 +37,7 @@ export function Hero() {
         </picture>
         {playVideo ? (
           <video
+            ref={videoRef}
             className={videoReady ? 'is-playing' : undefined}
             muted
             loop
@@ -40,7 +45,13 @@ export function Hero() {
             autoPlay
             preload='metadata'
             tabIndex={-1}
-            onPlaying={() => setVideoReady(true)}
+            onLoadedMetadata={() => {
+              if (videoRef.current) videoRef.current.playbackRate = VIDEO_RATE
+            }}
+            onPlaying={() => {
+              if (videoRef.current) videoRef.current.playbackRate = VIDEO_RATE
+              setVideoReady(true)
+            }}
           >
             <source src='/video/hero-720.mp4' type='video/mp4' media='(max-width: 767px)' />
             <source src='/video/hero-1080.webm' type='video/webm' />

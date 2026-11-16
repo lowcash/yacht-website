@@ -165,14 +165,14 @@ for (const viewport of VIEWPORTS) {
       }
     })
 
-    test('navigation is slim (56-64px) with a hairline and no translucency', async ({ page }) => {
+    test('navigation is slim (56-64px) with no hairline border', async ({ page }) => {
       const header = await page.locator('.site-header').evaluate((el) => {
         const cs = getComputedStyle(el)
         return { height: el.getBoundingClientRect().height, border: cs.borderBottomWidth }
       })
       expect(header.height).toBeGreaterThanOrEqual(56)
       expect(header.height).toBeLessThanOrEqual(64)
-      expect(header.border).toBe('1px')
+      expect(header.border).toBe('0px')
     })
 
     test('only the hero is viewport-tall; other sections stack at content height without snapping', async ({
