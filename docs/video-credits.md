@@ -20,3 +20,7 @@ Pixabay 284684 (aerial marina, handheld/shaky, removed on author feedback), 3327
 ## Gaps
 
 No free footage of rope or rigging close-ups, deck hardware or a crew at work with a readable licence was found. A second distinct luxury motor-yacht clip was not found on Pixabay (results are mostly AI-generated or moored), so 106066 is used in two cuts (wide and cropped). Pixabay licence text was read from each clip page; the site-wide licence page itself (pixabay.com/service/license-summary/) answers 403 to automated requests.
+
+## Second source search (2026-11-16)
+
+Mixkit (Mixkit Stock Video Free License read on clip pages: 4680, 5377, 5378, 4692, 40075, 40078, 40098; Restricted License on 47193, 27539, 7060, 33834, 11938), Coverr ("Free Commercial Rights" label read, but file URLs not reachable without the site UI) and Wikimedia Commons (no matching videos) were checked. No Mixkit clip is a luxury superyacht: results are dark Cabo bay shots, a people-filled catamaran, a silhouette sunset and a cluttered Phi Phi town aerial, none better than the current shots. Pixabay search pages and API answered HTTP 403/400 to automated requests this time, so no further Pixabay searches were possible. The current loop is kept unchanged.
