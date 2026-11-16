@@ -7,36 +7,22 @@ import {
   resolveScrollBehavior,
   shouldWriteSectionUrl,
 } from '../../packages/navigation-core'
-import type { ScrollTargetOptions } from '../../packages/navigation-core/types'
 import { SECTION_IDS, type SectionId } from './constants'
 
 const sectionRegistry = createSectionRegistry({ sectionIds: SECTION_IDS })
 const HERO_SECTION_ID: SectionId = 'hero'
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'
+
+type ViewTransitionDocument = Document & {
+  startViewTransition?: (update: () => void) => unknown
+}
 
 function getCurrentUrl() {
   return `${window.location.pathname}${window.location.search}${window.location.hash}`
 }
 
-function getMainScrollContainer() {
-  return document.querySelector('main')
-}
-
-function getMainScrollMetrics() {
-  const main = getMainScrollContainer()
-
-  if (!main) {
-    return {
-      scrollY: window.scrollY,
-      innerHeight: window.innerHeight,
-      documentHeight: document.documentElement.scrollHeight,
-    }
-  }
-
-  return {
-    scrollY: main.scrollTop,
-    innerHeight: main.clientHeight,
-    documentHeight: main.scrollHeight,
-  }
+export function prefersReducedMotion() {
+  return typeof window.matchMedia === 'function' && window.matchMedia(REDUCED_MOTION_QUERY).matches
 }
 
 export function parseSectionId(value: string) {
@@ -67,42 +53,66 @@ export function getHashSectionId() {
   return parseSectionId(hashId)
 }
 
-export function scrollToSection(
-  sectionId: string,
-  { behavior = 'smooth', updateHash = true }: ScrollTargetOptions = {},
-) {
+function jumpToSection(section: HTMLElement, sectionId: SectionId) {
+  if (sectionId === HERO_SECTION_ID) {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  } else {
+    section.scrollIntoView({ behavior: 'instant', block: 'start' })
+  }
+
+  section.setAttribute('tabindex', '-1')
+  section.focus({ preventScroll: true })
+}
+
+type NavigateOptions = {
+  /** Skip the view transition and the smooth scroll (initial hash, hashchange). */
+  immediate?: boolean
+  updateHash?: boolean
+}
+
+/**
+ * Scroll to a section. Crossfades through a View Transition when supported,
+ * falls back to smooth scrollIntoView, and jumps instantly under reduced motion.
+ */
+export function navigateToSection(sectionId: string, { immediate = false, updateHash = true }: NavigateOptions = {}) {
   const parsedSectionId = parseSectionId(sectionId)
-  if (!parsedSectionId) {
+  const section = parsedSectionId ? document.getElementById(parsedSectionId) : null
+
+  if (!parsedSectionId || !section) {
     return false
   }
 
-  const main = getMainScrollContainer()
-  const section = document.getElementById(parsedSectionId)
-
-  if (!main || !section) {
-    return false
+  const commit = () => {
+    jumpToSection(section, parsedSectionId)
+    if (updateHash) {
+      setSectionHash(parsedSectionId)
+    }
   }
 
-  const resolvedBehavior = resolveScrollBehavior(
-    behavior,
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  )
+  const reduced = prefersReducedMotion()
+  const transitionDocument = document as ViewTransitionDocument
 
-  const targetTop = parsedSectionId === HERO_SECTION_ID ? 0 : section.offsetTop
-
-  main.scrollTo({ top: targetTop, behavior: resolvedBehavior })
-
-  if (updateHash) {
-    setSectionHash(parsedSectionId)
+  if (immediate || reduced) {
+    commit()
+  } else if (typeof transitionDocument.startViewTransition === 'function') {
+    transitionDocument.startViewTransition(commit)
+  } else {
+    const behavior = resolveScrollBehavior('smooth', reduced)
+    if (parsedSectionId === HERO_SECTION_ID) {
+      window.scrollTo({ top: 0, behavior })
+    } else {
+      section.scrollIntoView({ behavior, block: 'start' })
+    }
+    if (updateHash) {
+      setSectionHash(parsedSectionId)
+    }
   }
 
   return true
 }
 
-export function resolveMainActiveSection(offset: number) {
-  const metrics = getMainScrollMetrics()
-
-  const boundaries = buildSectionBoundaries({
+export function getSectionOffsets() {
+  return buildSectionBoundaries({
     sectionIds: SECTION_IDS,
     resolveOffsetTop: (sectionId) => {
       const section = document.getElementById(sectionId)
@@ -110,15 +120,17 @@ export function resolveMainActiveSection(offset: number) {
         return null
       }
 
-      return section.offsetTop
+      return section.getBoundingClientRect().top + window.scrollY
     },
   })
+}
 
+export function resolveActiveSection() {
   return computeActiveSection({
-    scrollY: metrics.scrollY,
-    sections: boundaries,
-    offset,
-    innerHeight: metrics.innerHeight,
-    documentHeight: metrics.documentHeight,
+    scrollY: window.scrollY,
+    sections: getSectionOffsets(),
+    offset: Math.max(100, window.innerHeight / 2),
+    innerHeight: window.innerHeight,
+    documentHeight: document.documentElement.scrollHeight,
   })
 }

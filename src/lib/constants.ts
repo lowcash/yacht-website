@@ -1,28 +1,35 @@
-import { Anchor, Banknote, FileText, Fuel, Package, Ship, TrendingUp, Wrench } from 'lucide-react'
+import { Anchor, Banknote, FileCheck, Fuel, Handshake, Package, Ship, Wrench } from 'lucide-react'
 
 const SITE_URL = 'https://pinkladyyachtingservices.com'
 
 export const SECTION_IDS = ['hero', 'services', 'about', 'contact'] as const
 export type SectionId = (typeof SECTION_IDS)[number]
 
-const LIGHT_SECTION_IDS: readonly SectionId[] = ['about', 'contact']
-
 export const NAV_SECTIONS = [
-  { id: 'hero' as const, label: 'Welcome' },
+  { id: 'hero' as const, label: 'Home' },
   { id: 'services' as const, label: 'Services' },
   { id: 'about' as const, label: 'About' },
   { id: 'contact' as const, label: 'Contact' },
 ]
 
-export const MOBILE_NAV_ITEMS = [
-  { id: 'services' as const, label: 'Services' },
-  { id: 'about' as const, label: 'About' },
-  { id: 'contact' as const, label: 'Contact' },
-]
+export const HERO_TAGLINES = [
+  'Excellence in Every Wave',
+  'Where Luxury Meets the Sea',
+  'Your Voyage, Our Commitment',
+  'Setting Sail with Distinction',
+  'Navigating Dreams, Delivering Excellence',
+  'Beyond Service, Beyond Expectations',
+  'The Art of Yachting Perfected',
+  'Seamless Service, Endless Horizons',
+  'Charting Your Course to Perfection',
+  'Where Every Detail Matters',
+] as const
 
-export function isLightSection(sectionId: string) {
-  return (LIGHT_SECTION_IDS as readonly string[]).includes(sectionId)
+export function pickTagline(random: () => number = Math.random) {
+  return HERO_TAGLINES[Math.floor(random() * HERO_TAGLINES.length)]
 }
+
+export const PORTS = ['Phuket', 'Krabi', 'Koh Samui'] as const
 
 export const COMPANY_INFO = {
   name: 'Pink Lady Yachting Support Services',
@@ -80,7 +87,7 @@ export const SERVICES = [
     title: 'Formalities',
     description: 'Customs & immigration',
     details: 'Complete assistance with customs clearance, immigration procedures, and all regulatory documentation.',
-    icon: FileText,
+    icon: FileCheck,
   },
   {
     id: 'banking',
@@ -102,7 +109,7 @@ export const SERVICES = [
     title: 'Sales & Charter',
     description: 'Brokerage services',
     details: 'Professional yachting sales and charter services connecting owners with qualified buyers and charterers.',
-    icon: TrendingUp,
+    icon: Handshake,
   },
 ]
 

@@ -12,11 +12,6 @@ export type ComputeActiveSectionInput = {
   bottomEpsilon?: number
 }
 
-export type ScrollTargetOptions = {
-  behavior?: ScrollBehavior
-  updateHash?: boolean
-}
-
 export type SectionRegistryConfig<SectionId extends string> = {
   sectionIds: readonly SectionId[]
 }

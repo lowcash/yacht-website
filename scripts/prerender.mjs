@@ -1,24 +1,27 @@
-import { readFileSync, writeFileSync } from 'node:fs'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { createElement } from 'react'
+
+import { readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { renderToString } from 'react-dom/server'
-import { createServer } from 'vite'
+import { build } from 'vite'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = resolve(__dirname, '..')
 const distIndex = resolve(root, 'dist/index.html')
 
 async function prerender() {
-  const vite = await createServer({
+  // SSR build (same asset hashing/paths as the client build) instead of the dev server,
+  // so imported images resolve to their real /assets URLs in the prerendered HTML.
+  const ssrOutDir = resolve(root, 'dist-ssr')
+  await build({
     root,
-    server: { middlewareMode: true },
-    appType: 'custom',
     logLevel: 'error',
+    build: { ssr: resolve(root, 'src/prerender/StaticApp.tsx'), outDir: ssrOutDir, emptyOutDir: true },
   })
 
   try {
-    const { StaticApp, ORGANIZATION_JSON_LD } = await vite.ssrLoadModule('/src/prerender/StaticApp.tsx')
+    const { StaticApp, ORGANIZATION_JSON_LD } = await import(pathToFileURL(resolve(ssrOutDir, 'StaticApp.js')).href)
 
     const appHtml = renderToString(createElement(StaticApp))
     const jsonLd = JSON.stringify(ORGANIZATION_JSON_LD, null, 2)
@@ -41,7 +44,7 @@ async function prerender() {
     writeFileSync(distIndex, html)
     console.log('Prerendered content into dist/index.html')
   } finally {
-    await vite.close()
+    rmSync(ssrOutDir, { recursive: true, force: true })
   }
 }
 
