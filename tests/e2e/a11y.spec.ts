@@ -66,7 +66,7 @@ test.describe('Accessibility', () => {
     await expect(toggle).toBeFocused()
   })
 
-  test('reduced motion: reveal animations are off, route fully drawn', async ({ page }) => {
+  test('reduced motion: reveal animations are off, route progress is scroll-driven', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.setViewportSize({ width: 1440, height: 900 })
     await gotoHome(page)
@@ -78,6 +78,6 @@ test.describe('Accessibility', () => {
     const progress = await page
       .locator('.rail .draw')
       .evaluate((el) => getComputedStyle(el).getPropertyValue('--p').trim())
-    expect(progress).toBe('1')
+    expect(progress).toBe('0')
   })
 })

@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import { useActiveSection } from '@/components/shared/ActiveSectionContext'
 import { BrandLogo } from '@/components/shared/BrandLogo'
 import { SectionLink } from '@/components/shared/SectionLink'
@@ -7,9 +9,17 @@ import { MobileMenu } from './MobileMenu'
 
 export function Navigation() {
   const { activeSection } = useActiveSection()
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 24)
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    return () => window.removeEventListener('scroll', update)
+  }, [])
 
   return (
-    <header className='site-header'>
+    <header className='site-header' data-scrolled={scrolled ? 'true' : 'false'}>
       <div className='wrap'>
         <SectionLink id='hero' className='brand' aria-label='Pink Lady Yachting Services, home'>
           <BrandLogo className='brand-logo' alt='' sizes='44px' />

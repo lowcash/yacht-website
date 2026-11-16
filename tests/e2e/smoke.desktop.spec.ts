@@ -72,9 +72,17 @@ test.describe('Floating controls layout', () => {
     const draw = page.locator('.rail .draw')
     const read = () => draw.evaluate((el) => Number(getComputedStyle(el).getPropertyValue('--p')))
     await page.evaluate(() => window.scrollTo(0, 0))
-    await expect.poll(read).toBeLessThan(0.05)
+    await expect.poll(read).toBe(0)
+    await expect(page.getByTestId('rail-port-hero')).toHaveAttribute('aria-current', 'true')
     await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight))
-    await expect.poll(read).toBeGreaterThan(0.95)
+    // the line ends exactly at the last port (contact), which sits above the page foot
+    const portFraction = await page.evaluate(() => {
+      const rail = document.querySelector('.rail')!.getBoundingClientRect()
+      const port = document.querySelector('[data-testid="rail-port-contact"]')!.getBoundingClientRect()
+      return (port.top + port.height / 2 - rail.top) / rail.height
+    })
+    await expect.poll(read).toBeGreaterThan(portFraction - 0.02)
+    await expect(page.getByTestId('rail-port-contact')).toHaveAttribute('aria-current', 'true')
   })
 })
 
@@ -92,11 +100,13 @@ test.describe('Desktop navigation behavior', () => {
     await expect(page.getByTestId('nav-hero')).not.toHaveAttribute('aria-current', 'true')
   })
 
-  test('service cards are not click-through links (details toggle instead)', async ({ page }) => {
+  test('the whole service card opens its details dialog without scrolling', async ({ page }) => {
     await page.locator('#services').scrollIntoViewIfNeeded()
     const y = await getScrollY(page)
-    await page.locator('#services .card h3').first().click()
-    await page.waitForTimeout(300)
+    const card = page.locator('#services .card').first()
+    expect(await card.evaluate((el) => getComputedStyle(el).cursor)).toBe('pointer')
+    await card.click()
+    await expect(card.getByRole('dialog')).toBeVisible()
     expect(Math.abs((await getScrollY(page)) - y)).toBeLessThan(5)
   })
 

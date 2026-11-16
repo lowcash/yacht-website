@@ -5,14 +5,14 @@ export function About() {
         <div className='reveal'>
           <p className='eyebrow'>02 — About</p>
           <h2 className='display' style={{ marginTop: 'var(--s-4)' }}>
-            AT <em>PINK LADY</em> YACHT SUPPORT SERVICES
+            ABOUT <em>PINK LADY</em> YACHT SUPPORT SERVICES
           </h2>
           <div className='copy'>
             <p>
-              We pride ourselves on exceptional service, professionalism, and discretion. Every yacht. Every crew. Every
-              journey expertly managed.
+              We pride ourselves on exceptional service, professionalism, and discretion, from the first provisioning
+              order to the last departure.
             </p>
-            <p>Enjoy Thailand's stunning waters knowing your vessel is in expert hands.</p>
+            <p>Enjoy Thailand’s stunning waters knowing your vessel is in expert hands.</p>
           </div>
         </div>
 
@@ -20,7 +20,6 @@ export function About() {
           <span>Every yacht.</span>
           <span>Every crew.</span>
           <span>Every journey expertly managed.</span>
-          <small>Exceptional service, professionalism, and discretion.</small>
         </blockquote>
       </div>
     </section>

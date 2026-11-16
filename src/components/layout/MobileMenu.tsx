@@ -39,7 +39,11 @@ export function MobileMenu() {
         aria-controls='mobile-menu'
         onClick={() => setIsOpen((open) => !open)}
       >
-        {isOpen ? <X size={22} aria-hidden='true' /> : <Menu size={22} aria-hidden='true' />}
+        {isOpen ? (
+          <X size={22} strokeWidth={1.75} aria-hidden='true' />
+        ) : (
+          <Menu size={22} strokeWidth={1.75} aria-hidden='true' />
+        )}
       </button>
       <div id='mobile-menu' className='menu-panel' hidden={!isOpen}>
         {NAV_SECTIONS.map((section) => (

@@ -11,7 +11,8 @@ import { buttonVariants } from '../ui/button'
 type Service = (typeof SERVICES)[number]
 
 /**
- * Fixed-layout card. The long text lives in a native modal <dialog> (top layer,
+ * Fixed-layout card; the whole tile is the click target (the "Details" button stretches over it via ::after).
+ *  The long text lives in a native modal <dialog> (top layer,
  * focus trap, Escape and focus return built in), so opening it never moves the grid.
  */
 function ServiceCard({ service, index }: { service: Service; index: number }) {
@@ -21,7 +22,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   const titleId = `service-${service.id}-title`
 
   return (
-    <li className='card reveal'>
+    <li className='card'>
       <div className='card-top'>
         <span className='card-no'>{String(index + 1).padStart(2, '0')}</span>
         <Icon aria-hidden='true' />
@@ -35,7 +36,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         onClick={() => dialogRef.current?.showModal()}
         aria-label={`Details: ${service.title}`}
       >
-        Details
+        <span>Details</span>
         <Plus aria-hidden='true' />
       </button>
 

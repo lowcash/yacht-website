@@ -1,4 +1,4 @@
-import { Anchor, Banknote, FileText, Fuel, Package, Ship, TrendingUp, Wrench } from 'lucide-react'
+import { Anchor, Banknote, FileCheck, Fuel, Handshake, Package, Ship, Wrench } from 'lucide-react'
 
 const SITE_URL = 'https://pinkladyyachtingservices.com'
 
@@ -87,7 +87,7 @@ export const SERVICES = [
     title: 'Formalities',
     description: 'Customs & immigration',
     details: 'Complete assistance with customs clearance, immigration procedures, and all regulatory documentation.',
-    icon: FileText,
+    icon: FileCheck,
   },
   {
     id: 'banking',
@@ -109,7 +109,7 @@ export const SERVICES = [
     title: 'Sales & Charter',
     description: 'Brokerage services',
     details: 'Professional yachting sales and charter services connecting owners with qualified buyers and charterers.',
-    icon: TrendingUp,
+    icon: Handshake,
   },
 ]
 

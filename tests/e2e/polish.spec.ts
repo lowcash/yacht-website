@@ -91,28 +91,25 @@ for (const viewport of VIEWPORTS) {
       }
     })
 
-    test('navigation is a solid navy-deep surface (no translucency, no blur)', async ({ page }) => {
+    test('navigation is transparent over the hero and turns into blurred glass on scroll', async ({ page }) => {
       const read = () =>
         page.locator('.site-header').evaluate((el) => {
           const cs = getComputedStyle(el)
-          return { bg: cs.backgroundColor, filter: cs.backdropFilter, opacity: cs.opacity }
+          return { bg: cs.backgroundColor, image: cs.backgroundImage, filter: cs.backdropFilter }
         })
-      const header = await read()
-      expect(header.bg).toMatch(/^(rgb|oklch|color)\(/)
-      expect(header.bg).not.toMatch(/rgba|\//) // any alpha channel would show up as rgba() or '/ a'
-      expect(['none', '']).toContain(header.filter)
-      expect(header.opacity).toBe('1')
+      const top = await read()
+      expect(top.bg).toBe('rgba(0, 0, 0, 0)')
+      expect(['none', '']).toContain(top.filter)
+
       await page.evaluate(() => window.scrollTo(0, 1200))
-      expect(await read()).toEqual(header)
+      await expect(page.locator('.site-header')).toHaveAttribute('data-scrolled', 'true')
+      await expect.poll(async () => (await read()).filter).toContain('blur')
+      expect((await read()).bg).toMatch(/^(rgba|rgb|oklch|color)\(/)
 
       if (viewport.width < 640) {
         await page.getByRole('button', { name: /toggle menu/i }).click()
-        const panel = await page.locator('#mobile-menu').evaluate((el) => {
-          const cs = getComputedStyle(el)
-          return { bg: cs.backgroundColor, filter: cs.backdropFilter }
-        })
-        expect(panel.bg).toBe(header.bg)
-        expect(['none', '']).toContain(panel.filter)
+        const panel = await page.locator('#mobile-menu').evaluate((el) => getComputedStyle(el).backgroundColor)
+        expect(panel).not.toBe('rgba(0, 0, 0, 0)')
       }
     })
 
